@@ -18,6 +18,7 @@ Decentralized Electric Vehicle Charging Platform
 
 * GoogleMAPs API for JavaScript
 * OpenChargeMAP API (https://api.openchargemap.io)
+* Amazon SNS (SMS API)
 
 ## Protocol
 
