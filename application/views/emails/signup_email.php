@@ -7,19 +7,6 @@
        </head>
 
        <body>
-        <table class="full" style="-webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;" width="400" cellspacing="0" cellpadding="0" border="0" align="center">
-
-             <tr>
-
-                <td style="width:80px; height:auto;text-align: center;padding: 33px 0;" width="100%">
-
-                   <a href="#" style="text-decoration: none;"><img src="https://enertia.io/assets/images/logo-e.png" alt="" class="hover" width="80" border="0"></a>
-
-                </td>
-
-             </tr>
-
-          </table>
 
           <table class="full" style="-webkit-border-radius: 6px; background: #fff; -moz-border-radius: 6px; border-radius: 6px;-webkit-border-radius: 6px;-moz-border-radius: 6px;border-radius: 6px;-webkit-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);-moz-box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.75);box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.10);" width="400" cellspacing="0" cellpadding="0" border="0" align="center">
 

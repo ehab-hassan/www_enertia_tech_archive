@@ -1,7 +1,8 @@
+ 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     var client_id = '839737356370775';
-    var redirect_uri = 'https://enertia.tech/';
+    var redirect_uri = 'https://enertia.tech/facebook';
     window.fbAsyncInit = function() {
         // FB JavaScript SDK configuration and setup
         FB.init({
@@ -66,42 +67,32 @@
 
     // Save user data to the database
     function saveUserData(userData){
+        console.log(userData);
 
-        $.ajax({  
-             url:"<?php echo base_url(); ?>signup/facebook",  
-             method:"post",  
-             data:{social:'Social', userData: JSON.stringify(userData)},  
-             dataType:'json',
-             success:function(data){  
-                if (data.status=='success') {
-                    if (data.UserPhone == '') {
-                        window.location.href = "<?php echo base_url('phone'); ?>";
+        if (userData.email != 'undefined' && userData.email != null) {
+            $.ajax({  
+                 url:"<?php echo base_url(); ?>signup/facebook",  
+                 method:"post",  
+                 data:{social:'Social', userData: JSON.stringify(userData)},  
+                 dataType:'json',
+                 success:function(data){  
+                    if (data.status=='success') {
+                        if (data.UserPhone == '') {
+                            window.location.href = "<?php echo base_url('phone'); ?>";
+                        }else{
+                            window.location.href = "<?php echo base_url('dashboard'); ?>";
+                        }
                     }else{
-                        window.location.href = "<?php echo base_url('dashboard'); ?>";
+                        alert(data.msg);
                     }
-                }else{
-                    alert(data.msg);
-                }
-             },
-             error: function(){
+                 },
+                 error: function(){
 
-             }
-        });
-
-        // $.post("<?php echo base_url('signup/facebook'); ?>", ,'json', function(data){ 
-        //     // if (data['status']=='success') {
-        //     //     if (data['UserPhone'] == '') {
-        //     //         alert();
-        //     //         window.location.href = "<?php echo base_url('phone'); ?>";
-        //     //     }else{
-
-        //     //         // window.location.href = "<?php echo base_url('dashboard'); ?>";
-        //     //     }
-        //     // }else{
-        //     //     // alert(data.msg);
-        //     // }
-        //     return true; 
-        // });
+                 }
+            });
+        }else{
+            $('.facebook_not_geting_email').html('<p>We were unable to retrieve your email with Facebook. Please check your privacy settings and use the regular SignUp option to join us</p><a href="<?php echo base_url('signup'); ?>" class="btn btn-primary waves-effect waves-light">Sign Up</a>');
+        }
     }
 
     // Logout from facebook
@@ -216,7 +207,7 @@
                      method:"post",  
                      data:{email:email},  
                      success:function(data){  
-                      $('#email_result').show().html(data).fadeOut(5000);  
+                      $('#email_result').show().html(data);  
                      }  
                 });  
                 checkstep1button();
@@ -227,7 +218,7 @@
                  
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                 
-                $("#phone_result").show().html("Digits Only").show().fadeOut(5000);
+                $("#phone_result").show().html("Digits Only").show();
                 return false;
             }
         });
@@ -240,7 +231,7 @@
                      method:"post",  
                      data:{phone:country_code+phone},  
                      success:function(data){  
-                      $('#phone_result').show().html(data).fadeOut(5000);  
+                      $('#phone_result').show().html(data);  
                      }  
                 }); 
                 checkstep1button(); 
@@ -256,7 +247,7 @@
                      data:{phone:country_code+phone},  
                      success:function(data){ 
                         if (data.status=='false') {
-                            $('#login_phone_result').show().html('<label class="text-danger"><span class="glyphicon glyphicon-remove"></span> That Number is not with us ! SignUp below</label>').fadeOut(5000);  
+                            $('#login_phone_result').show().html('<label class="text-danger"><i class="fa fa-times"></i></label>');  
                         }
                      }  
                 }); 
@@ -273,10 +264,10 @@
                      dataType:'json',
                      success:function(data){  
                         if (data.status == 'true') {
-                            $('#otp_result').show().html('<label class="text-success"><span class="glyphicon glyphicon-remove"></span>Success ! Phone Code Verified</label>').fadeOut(5000);  
+                            $('#otp_result').show().html('<label class="text-success"><i class="fa fa-check"></i></label>');  
                             checkstep2button();
                         }else{
-                            $('#otp_result').show().html('<label class="text-danger"><span class="glyphicon glyphicon-ok"></span>Invalid Phone Code</label>').fadeOut(5000);  
+                            $('#otp_result').show().html('<label class="text-danger"><i class="fa fa-times"></i></label>');  
                         }
                      }  
                 });
@@ -300,6 +291,7 @@
                          success:function(data){ 
                             $('.loader_form').hide(); 
                             if (data.status == 'success') {
+                                $('#resend').attr('resend',data.UserID);
                                 send_otp(data.UserID);
                                 $('#userid').val(data.UserID);
                                 nextPrev(1);
@@ -331,7 +323,7 @@
                                 $('#userid').val(data.userdata.UserID);
                                 nextPrev(1);
                             }else{
-                                $(".r_success_msg").html('<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>EUnknown rror ! SPlease try again.</div>').show().fadeOut(5000);
+                                $(".r_success_msg").html('<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Error ! Some error try again.</div>').show();
                             }
                          },
                          error: function(){
@@ -353,7 +345,7 @@
                  dataType:'json',
                  success:function(data){  
                     if (data.status == 'true') {
-                        $('#otp_result').show().html('<label class="text-success"><span class="glyphicon glyphicon-remove"></span>Success ! Phone Code Verified</label>').fadeOut(5000);  
+                        $('#otp_result').show().html('<label class="text-success"><i class="fa fa-check"></i></label>');  
                         if (otp != '') {
                             var userid = $('#userid').val();
                             $('.loader_form').show();
@@ -366,10 +358,10 @@
                                     $('.loader_form').hide(); 
                                     if (data.status == 'success') {
                                         $('#userid').val(data.userdata.UserID);
-                                        $(".r_success_msg").html('<div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Serfect! You are now on the Network</div>').show().fadeOut(5000);
+                                        $(".r_success_msg").html('<div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Success ! Your account successfully Register.</div>').show();
                                         window.location.href='<?php echo base_url("/dashboard"); ?>';
                                     }else{
-                                        $(".r_success_msg").html('<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>EUnknown Error ! Please try again</div>').show().fadeOut(5000);
+                                        $(".r_success_msg").html('<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Error ! Some error try again.</div>').show();
                                     }
                                  },
                                  error: function(){
@@ -378,7 +370,7 @@
                             });  
                         }
                     }else{
-                        $('#otp_result').show().html('<label class="text-danger"><span class="glyphicon glyphicon-ok"></span>Invalid Phone Code</label>').fadeOut(5000);  
+                        $('#otp_result').show().html('<label class="text-danger"><i class="fa fa-times"></i></label>');  
                     }
                  }  
             });
@@ -430,10 +422,11 @@
                      success:function(data){ 
                         $('.loader_form').hide(); 
                         if (data.status == 'true') {
+                            $('#resend').attr('resend',data.userdata.UserID);
                             send_otp(data.userdata.UserID);
                             nextPrev(1);
                         }else{
-                            $('#login_phone_result').html('<label class="text-danger"><span class="glyphicon glyphicon-remove"></span> That Number is not with us! SignUp below</label>').show();  
+                            $('#login_phone_result').html('<label class="text-danger"><i class="fa fa-times"></i></label>').show();  
                         }
                      },
                      error: function(){
@@ -441,6 +434,12 @@
                      }
                 });  
             }
+        });
+
+        /*for resend otp*/
+        $('#resend').click(function(){
+            var userid = $('#resend').attr('resend');
+            send_otp(userid);
         });
         $('#submit_to_login').click(function(){
             var otp = $('#opt').val();
@@ -455,7 +454,7 @@
                         if (data.status == 'true') {
                             window.location.href='<?php echo base_url("/dashboard"); ?>';
                         }else{
-                            $('#otp_result').show().html('<label class="text-danger"><span class="glyphicon glyphicon-ok"></span>Invalid Phone Code</label>').fadeOut(5000);  
+                            $('#otp_result').show().html('<label class="text-danger"><i class="fa fa-times"></i></label>');  
                         }
                      }  
                 });
@@ -476,18 +475,18 @@
                      dataType:'json',
                      success:function(data){  
                         if (data.status=='true') {
-                            $('#phone_result').show().html('<label class="text-danger"><span class="glyphicon glyphicon-remove"></span>Oops ! That Phone Number is taken</label>').fadeOut(5000);
+                            $('#phone_result').show().html('<label class="text-danger"><i class="fa fa-times"></i></label>');
                         }else{
                             $.ajax({  
                                  url:"<?php echo base_url(); ?>phone/post",  
                                  method:"post",  
-                                 data:{empty_phone:country_code+phone},  
+                                 data:{empty_phone:country_code+phone,make:make,models:models},  
                                  dataType:'json',
                                  success:function(data){  
                                     if (data.status == 'success') {
                                         window.location.href='<?php echo base_url("/dashboard"); ?>';
                                     }else{
-                                        $('#r_success_msg').show().html('<label class="text-danger"><span class="glyphicon glyphicon-ok"></span>'+data.msg+'</label>').fadeOut(5000);  
+                                        $('#r_success_msg').show().html('<label class="text-danger"><span class="glyphicon glyphicon-ok"></span>'+data.msg+'</label>');  
                                     }
                                  }  
                             });
@@ -520,8 +519,12 @@
              method:"get",  
              dataType: "json",
              success:function(data){ 
+                if (data==200) {
+                    $('.otpsended').html('<div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Success ! OTP successfully Send.</div>');
+                }
              },
              error: function(data){
+                $('.otpsended').html('<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Error ! OTP not send. resend again.</div>');
              }
         });  
     }
@@ -574,4 +577,5 @@
       // If the valid status is true, mark the step as finished and valid:
       return valid; // return the valid status
     }
- </script> 
+
+</script>
