@@ -7,7 +7,6 @@ class Login extends CI_Controller {
 	public function __construct()
 
 	{
-
 		parent::__construct();
 
 		$this->load->model(array('User','Main_model'));
@@ -17,7 +16,6 @@ class Login extends CI_Controller {
 			redirect('/dashboard');
 
 		}
-
 	}
 
 	/* index*/
@@ -37,48 +35,24 @@ class Login extends CI_Controller {
 
 
 	/*login to phone number*/
-
 	public function Login_Phone()
-
 	{	
-
 		if (empty($this->input->post('otp'))) {
-
 			return false;
-
 		}
-
-		$check = $this->Main_model->is_otp_available($this->input->post('otp'));
-
-		if($check)  
-
+		if($this->input->post("otp") == $this->session->userdata('otp'))  
 		{  
-
+			$check = $this->User->get_by_phone($this->input->post('phone'));
 			$data = array(
-
-                      'UserOTP'   		=> '',
-
                       'UserLastLogin'  	=> date("Y-m-d H:i:s"),
-
                     );
-
 	       	$this->User->update($check->UserID, $data);
-
 	       	$this->login_lib->login($check);
-
 		 	$this->output->set_output(json_encode(array('status' => 'true','userdata' => $check)));  
-
 		}  
-
 		else  
-
 		{  
-
 		 	$this->output->set_output(json_encode(array('status' => 'false'))); 
-
 		}  
-
 	}
-
 }
-

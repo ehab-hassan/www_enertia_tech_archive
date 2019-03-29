@@ -161,7 +161,7 @@ $route['ajax/loginphone'] = "ajax/login_check_phone";
 $route['ajax/otp'] = "ajax/is_otp_available";
 
 $route['otp/send/(:any)'] = "ajax/send_otp/$1";
-
+/*get cuntry code*/
 $route['getcuntrycode/(:any)'] = "ajax/getcuntrycode/$1";
 
 
@@ -177,3 +177,6 @@ $route['dashboard'] = "dashboard";
 /*logout*/
 
 $route['logout'] = "dashboard/logout";
+
+/*opencharg api*/
+$route['getlatlong/(:any)'] = "ajax/GetLatLong";

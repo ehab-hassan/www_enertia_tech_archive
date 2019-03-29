@@ -14,7 +14,6 @@
    */
     function is_email_available($email){  
       $this->db->where('UserEmail', $email);  
-      $this->db->where_in('Userstep', [2,3]);  
       $query = $this->db->get("ev_users");  
       if($query->num_rows() > 0){  
         return true;  
@@ -31,7 +30,6 @@
     */
 		function is_phone_available($phone){  
       $this->db->where('UserPhone', $phone);  
-      $this->db->where_in('Userstep', [2,3]);  
       $query = $this->db->get("ev_users");  
       if($query->num_rows() > 0){  
           return true;  

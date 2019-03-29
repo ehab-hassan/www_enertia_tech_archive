@@ -68,7 +68,6 @@ class User extends CI_Model{
         $this->db->from('ev_users as u');
         $this->db->where("`u`.`UserEmail`",$email);
         $this->db->or_where("`u`.`UserPhone`",$phone);
-        $this->db->where_in('Userstep', [2,3]); 
         return $this->db->get()->row();
     }
     /**
@@ -82,7 +81,6 @@ class User extends CI_Model{
         $this->db->select('u.*');
         $this->db->from('ev_users as u');
         $this->db->where("`u`.`UserPhone`",$phone);
-        $this->db->where_in('Userstep', [2,3]); 
         return $this->db->get()->row();
     }
 

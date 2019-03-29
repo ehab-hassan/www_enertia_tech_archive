@@ -13,6 +13,7 @@ class Login_lib {
     }
     
 	public function login($userdata){
+		$userdata = (object) $userdata;
 		$CI =& get_instance(); 
 		$CI->load->helper('security');
 		$datasession = array(

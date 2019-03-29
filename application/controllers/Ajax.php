@@ -103,25 +103,15 @@ class Ajax extends CI_Controller {
 	 */
 
 	function login_check_phone(){
-
-		$checkphonenumber = $this->user->get_by_phone($_POST["phone"]);
-
+		$checkphonenumber = $this->user->get_by_phone($this->input->post('phone'));
 		if(count((array) $checkphonenumber) > 0)  
-
 		{  
-
 		 	$this->output->set_output(json_encode(array('status' => 'true','userdata' => $checkphonenumber)));  
-
 		}  
-
 		else  
-
 		{  
-
 		 	$this->output->set_output(json_encode(array('status' => 'false'))); 
-
 		} 
-
 	}
 
 
@@ -134,40 +124,32 @@ class Ajax extends CI_Controller {
 
 	function is_otp_available(){
 
-		$check = $this->Main_model->is_otp_available($_POST["otp"]);
-
-		if($check)  
-
+		if($this->input->post("otp") == $this->session->userdata('otp'))  
 		{  
 
-		 	$this->output->set_output(json_encode(array('status' => 'true','userdata' => $check)));  
-
+		 	$this->output->set_output(json_encode(array('status' => 'true')));  
 		}  
-
 		else  
-
 		{  
-
 		 	$this->output->set_output(json_encode(array('status' => 'false'))); 
-
 		}  
-
 	}
 
 
 
 	/* Function for send sms */
 
-	function send_otp($UserID){
-		$data = array();
-		$userdata = $this->user->get_by_id($UserID);
+	function send_otp($mobile){
+		// $data = array();
+		// $userdata = $this->user->get_by_id($UserID);
 		// if ($userdata->UserOTP == '') {
 			$otp = rand(1000,9999);
-			$data_arr=array(
-				'UserOTP' => $otp,
-				);
-			$this->user->update($UserID,$data_arr);
-			$mobile = $userdata->UserPhone;
+			$this->session->set_userdata('otp',$otp);
+			// $data_arr=array(
+			// 	'UserOTP' => $otp,
+			// 	);
+			// $this->user->update($UserID,$data_arr);
+			// $mobile = $userdata->UserPhone;
 			$awssendmsgoutput = $this->aws_sdk->SendPushNotification($otp,$mobile);
 			$this->output->set_output($awssendmsgoutput); 
 		// }
@@ -185,6 +167,17 @@ class Ajax extends CI_Controller {
 
 	}
 
+	/*Get Lat Long using ip address*/
+	function GetLatLong($user_ip=null)
+	{
+		$geo = unserialize(file_get_contents("http://www.geoplugin.net/php.gp?ip=$user_ip"));
+		if (!empty($geo)) {
+			
+			echo  json_encode( array('geoplugin_latitude' => (float)$geo['geoplugin_latitude'],'geoplugin_longitude' => (float)$geo['geoplugin_longitude'] ));
+		}else{
+			echo json_encode(array('geoplugin_status' => '500'));
+		}
+	}
 }
 
 ?>

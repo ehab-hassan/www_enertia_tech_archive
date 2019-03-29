@@ -1,8 +1,23 @@
- 
+<div class="modal fade" id="exampleModalform" tabindex="-1" role="dialog" style="display: none; " aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title align-self-center mt-0">Charge Point Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body infomap">
+                <div id="mappopuinfohtml">
+                </div>
+            </div>   
+        </div>
+    </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
     var client_id = '839737356370775';
-    var redirect_uri = 'https://enertia.tech/facebook';
+    var redirect_uri = 'https://www.alcyone.in/enertia/facebook';
     window.fbAsyncInit = function() {
         // FB JavaScript SDK configuration and setup
         FB.init({
@@ -12,7 +27,6 @@
           xfbml      : true,  // parse social plugins on this page
           version    : 'v2.10' // use graph api version 2.10
         });
-        
         // Check whether the user already logged in
         FB.getLoginStatus(function(response) {
             console.log(response);
@@ -24,7 +38,6 @@
             }
         });
     };
-
     // Load the JavaScript SDK asynchronously
     (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -38,33 +51,19 @@
         var matches = location.hash.match(new RegExp(key+'=([^&]*)'));
         return matches ? matches[1] : null;
     }
-
-      
     // Facebook login with JavaScript SDK
     function fbLogin() {
-        
-        // FB.login(function (response) {
-        //     if (response.authResponse) {
-        //         // Get and display the user profile data
-        //         getFbUserData();
-        //     } else {
-        //         document.getElementById('status').innerHTML = 'User cancelled login or did not fully authorize.';
-        //     }
-        // }, {scope: 'email,public_profile'});
         window.location = encodeURI("https://www.facebook.com/dialog/oauth?client_id="+client_id+"&redirect_uri="+redirect_uri+"&response_type=token&scope=email,public_profile&state=fblogin");
     }
-
     // Fetch the user profile data from facebook
     function getFbUserData(){
         
         FB.api('/me', {locale: 'en_US', fields: 'id,first_name,last_name,email,cover,name,about,age_range,birthday,education,devices,gender,picture'},
         function (response) {
             // Save user data
-            // console.log(response);
             saveUserData(response);
         });
     }
-
     // Save user data to the database
     function saveUserData(userData){
         console.log(userData);
@@ -94,7 +93,6 @@
             $('.facebook_not_geting_email').html('<p>We were unable to retrieve your email with Facebook. Please check your privacy settings and use the regular SignUp option to join us</p><a href="<?php echo base_url('signup'); ?>" class="btn btn-primary waves-effect waves-light">Sign Up</a>');
         }
     }
-
     // Logout from facebook
     function fbLogout() {
         FB.logout(function() {
@@ -149,6 +147,8 @@
           } else {
             document.getElementById("prevBtn").style.display = "inline";
           }
+          // console.log(n);
+          // console.log(x.length);
           if (n == (x.length - 1)) {
             $('.submit_to_action').removeClass('hide');
             $('#nextBtn').addClass('hide');
@@ -265,7 +265,7 @@
                      success:function(data){  
                         if (data.status == 'true') {
                             $('#otp_result').show().html('<label class="text-success"><i class="fa fa-check"></i></label>');  
-                            checkstep2button();
+                            
                         }else{
                             $('#otp_result').show().html('<label class="text-danger"><i class="fa fa-times"></i></label>');  
                         }
@@ -282,28 +282,10 @@
                 var phone = $('#phone').val();
                 validateForm();
                 if (username != '' && email != '' && phone != '') {
-                    $('.loader_form').show();
-                    $.ajax({  
-                         url:"<?php echo base_url(); ?>signup/post",  
-                         method:"post",  
-                         dataType: "json",
-                         data:{step:1,username:username,email:email,phone:country_code+phone,UserLoginType:'Regular',UserIP:'<?php echo $ip = $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']);?>'},  
-                         success:function(data){ 
-                            $('.loader_form').hide(); 
-                            if (data.status == 'success') {
-                                $('#resend').attr('resend',data.UserID);
-                                send_otp(data.UserID);
-                                $('#userid').val(data.UserID);
-                                nextPrev(1);
-                                carmake();
-                            }else{
-                                $('#'+data.id).html(data.msg).show();  
-                            }
-                         },
-                         error: function(){
-                            $('.loader_form').hide(); 
-                         }
-                    });  
+                    $('#resend').attr('resend',phone);
+                    send_otp(phone);
+                    nextPrev(1);
+                    carmake();
                 }
             }else if (currentTab==1) {
                 var make = $('#carmake').val();
@@ -311,32 +293,17 @@
                 var userid = $('#userid').val();
                 validateForm();
                 if (make != '' && models != '' && userid != '') {
-                    $('.loader_form').show();
-                    $.ajax({  
-                         url:"<?php echo base_url(); ?>signup/post",  
-                         method:"post",  
-                         dataType: "json",
-                         data:{step:2,make:make,models:models,userid:userid},  
-                         success:function(data){ 
-                            $('.loader_form').hide(); 
-                            if (data.status == 'success') {
-                                $('#userid').val(data.userdata.UserID);
-                                nextPrev(1);
-                            }else{
-                                $(".r_success_msg").html('<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Error ! Some error try again.</div>').show();
-                            }
-                         },
-                         error: function(){
-                            $('.loader_form').hide(); 
-                         }
-                    });  
+                nextPrev(1);
                 }
             }
         });
 
         /*submit last setp fo signup*/
-        $('#submit_to_register').click(function() {
+        $("#signup_form").submit(function(e) {
+        // $('#submit_to_register').click(function() {
+            e.preventDefault();
             var otp = $('#opt').val();
+            var form = $(this);
             validateForm();
             $.ajax({  
                  url:"<?php echo base_url(); ?>ajax/otp",  
@@ -347,21 +314,20 @@
                     if (data.status == 'true') {
                         $('#otp_result').show().html('<label class="text-success"><i class="fa fa-check"></i></label>');  
                         if (otp != '') {
-                            var userid = $('#userid').val();
                             $('.loader_form').show();
+                            console.log(form.serialize());
                             $.ajax({  
                                  url:"<?php echo base_url(); ?>signup/post",  
                                  method:"post",  
                                  dataType: "json",
-                                 data:{step:3,otp:otp,userid:userid},  
+                                 data:form.serialize(),  
                                  success:function(data){ 
                                     $('.loader_form').hide(); 
                                     if (data.status == 'success') {
-                                        $('#userid').val(data.userdata.UserID);
-                                        $(".r_success_msg").html('<div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Success ! Your account successfully Register.</div>').show();
+                                        $(".r_success_msg").html(data.msg).show();
                                         window.location.href='<?php echo base_url("/dashboard"); ?>';
                                     }else{
-                                        $(".r_success_msg").html('<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Error ! Some error try again.</div>').show();
+                                        $(".r_success_msg").html(data.msg).show();
                                     }
                                  },
                                  error: function(){
@@ -371,6 +337,7 @@
                         }
                     }else{
                         $('#otp_result').show().html('<label class="text-danger"><i class="fa fa-times"></i></label>');  
+                        $('.r_success_msg').html('<div class="alert alert-danger mb-0 alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Error ! Phone number has been already taken.</div>').show();  
                     }
                  }  
             });
@@ -391,20 +358,13 @@
                         });
                         $('#carmodels').html(modeloption);
                         $('#carmodels').removeAttr('disabled');
-                        checkstep2button();
+                        
                      },
                      error: function(data){
                      }
                 });  
             }else{
                 $('#carmodels').attr('disabled','disabled');
-            }
-        });
-        /*make on change then get model*/
-        $('#carmodels').change(function(){
-            var model = $(this).val();
-            if (model != '') {
-                checkstep2button();
             }
         });
 
@@ -422,11 +382,12 @@
                      success:function(data){ 
                         $('.loader_form').hide(); 
                         if (data.status == 'true') {
-                            $('#resend').attr('resend',data.userdata.UserID);
-                            send_otp(data.userdata.UserID);
+                            $('#resend').attr('resend',data.userdata.UserPhone);
+                            send_otp(data.userdata.UserPhone);
                             nextPrev(1);
                         }else{
                             $('#login_phone_result').html('<label class="text-danger"><i class="fa fa-times"></i></label>').show();  
+                            $('.r_success_msg').html('<div class="alert alert-danger mb-0 alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Error ! Phone number not available.</div>').show();  
                         }
                      },
                      error: function(){
@@ -443,12 +404,13 @@
         });
         $('#submit_to_login').click(function(){
             var otp = $('#opt').val();
+            var phone = $('#login_phone').val();
             validateForm();
             if (otp != '') {
                 $.ajax({  
                      url:"<?php echo base_url(); ?>login/phone",  
                      method:"post",  
-                     data:{otp:otp},  
+                     data:{otp:otp,phone:country_code+phone},  
                      dataType:'json',
                      success:function(data){  
                         if (data.status == 'true') {
@@ -476,6 +438,7 @@
                      success:function(data){  
                         if (data.status=='true') {
                             $('#phone_result').show().html('<label class="text-danger"><i class="fa fa-times"></i></label>');
+                            $('.r_success_msg').html('<div class="alert alert-danger mb-0 alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Error ! Phone number has been already taken.</div>').show();  
                         }else{
                             $.ajax({  
                                  url:"<?php echo base_url(); ?>phone/post",  
@@ -507,24 +470,19 @@
             // $('#nextBtn').removeAttr('disabled');
         }
     }
-    function checkstep2button() {
-        // $('#submit_to_register').attr('disabled','disabled');
-        if ($('#opt').val() != '' && $('#carmake').val() != '' && $('#carmodels').val() != '') {
-            // $('#submit_to_register').removeAttr('disabled');
-        }
-    }
-    function send_otp(userid) {
+
+    function send_otp(phone) {
         $.ajax({  
-             url:"<?php echo base_url(); ?>otp/send/"+userid,  
+             url:"<?php echo base_url(); ?>otp/send/"+phone,  
              method:"get",  
              dataType: "json",
              success:function(data){ 
                 if (data==200) {
-                    $('.otpsended').html('<div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Success ! OTP successfully Send.</div>');
+                    $('.otpsended').html('<div class="alert mb-0 alert-success alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Success ! OTP successfully Send.</div>');
                 }
              },
              error: function(data){
-                $('.otpsended').html('<div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Error ! OTP not send. resend again.</div>');
+                $('.otpsended').html('<div class="alert mb-0 alert-danger alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Error ! OTP not send. resend again.</div>');
              }
         });  
     }
@@ -578,4 +536,181 @@
       return valid; // return the valid status
     }
 
+
+    /*<!-- google map with opencharge api -->*/
+
+    /*showPosition*/
+    var location_check = true;
+    function showPosition(position){ 
+        location.latitude=position.coords.latitude;
+        location.longitude=position.coords.longitude;
+         $.ajax({
+            url : 'https://api.openchargemap.io/v2/poi/?output=json&latitude='+location.latitude+'&longitude='+location.longitude,
+            method : 'get',
+            dataType: 'json',
+            contentType: "application/json",                 
+            success: function(data) {
+                pointmap(data,location);
+            }
+        });
+    } 
+    function initMap() {
+        $(".ajax_loder").show();
+        $(".ajax_loder .status").show();
+        var latitudeAndLongitude=document.getElementById("latitudeAndLongitude"),
+        location={ latitude:'', longitude:''};
+        if (navigator.geolocation){
+            var options = {};
+            navigator.geolocation.getCurrentPosition(
+            function success(position) {
+                location_check = true;
+                console.log(position);
+                showPosition(position);
+            },
+            function error(error_message) {
+
+                location_check = false;
+                $.ajax({  
+                     url:"//jsonip.com",  
+                     method:"get",  
+                     dataType: 'jsonp',
+                     crossDomain: true,
+                     success:function(res){ 
+                        console.log(res);
+                        $.ajax({
+                            url: 'getlatlong/'+res.ip,
+                            type: 'get',
+                            dataType: 'json',
+                            success: function(data) {
+                                console.log(data);
+                                location.latitude=data.geoplugin_latitude;
+                                location.longitude=data.geoplugin_longitude;
+                                $.ajax({
+                                    url : 'https://api.openchargemap.io/v2/poi/?output=json&latitude='+location.latitude+'&longitude='+location.longitude,
+                                    method : 'get',
+                                    dataType: 'json',
+                                    contentType: "application/json",                 
+                                    success: function(data) {
+                                        pointmap(data,location);
+                                    }
+                                });
+                            }
+                        });
+                     }  
+                });  
+            },options);
+        }else{ latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser."; }
+    }
+    function maploadbeforecall(){
+        $.ajax({  
+             url:"//jsonip.com",  
+             method:"get",  
+             dataType: 'jsonp',
+             crossDomain: true,
+             success:function(res){ 
+                 $.ajax({
+                    url: 'getlatlong/'+res.ip,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        location.latitude=data.geoplugin_latitude;
+                        location.longitude=data.geoplugin_longitude;
+                        pointmap('',location);
+                        initMap();
+                    }
+                });
+              }
+        });
+    }
+    function pointmap(jsondata,location) {
+        var zoomm = 13;
+        if (location_check==false) {
+            zoomm = 11;
+        }
+        var map = new google.maps.Map(document.getElementById('map'), {
+                      center: {lat: location.latitude, lng: location.longitude},
+                      zoom: zoomm,
+                      scrollwheel: false,
+                      mapTypeId: 'roadmap',
+                      mapTypeId: google.maps.MapTypeId.ROADMAP,
+                      // styles: [{elementType: 'geometry', stylers: [{color: '#242f3e'}]},{elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},{elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},{  featureType: 'administrative.locality',  elementType: 'labels.text.fill',  stylers: [{color: '#d59563'}]},{  featureType: 'poi',  elementType: 'labels.text.fill',  stylers: [{color: '#d59563'}]},{  featureType: 'poi.park',  elementType: 'geometry',  stylers: [{color: '#263c3f'}]},{  featureType: 'poi.park',  elementType: 'labels.text.fill',  stylers: [{color: '#6b9a76'}]},{  featureType: 'road',  elementType: 'geometry',  stylers: [{color: '#38414e'}]},{  featureType: 'road',  elementType: 'geometry.stroke',  stylers: [{color: '#212a37'}]},{  featureType: 'road',  elementType: 'labels.text.fill',  stylers: [{color: '#9ca5b3'}]},{  featureType: 'road.highway',  elementType: 'geometry',  stylers: [{color: '#746855'}]},{  featureType: 'road.highway',  elementType: 'geometry.stroke',  stylers: [{color: '#1f2835'}]},{  featureType: 'road.highway',  elementType: 'labels.text.fill',  stylers: [{color: '#f3d19c'}]},{  featureType: 'transit',  elementType: 'geometry',  stylers: [{color: '#2f3948'}]},{  featureType: 'transit.station',  elementType: 'labels.text.fill',  stylers: [{color: '#d59563'}]},{  featureType: 'water',  elementType: 'geometry',  stylers: [{color: '#17263c'}]},{  featureType: 'water',  elementType: 'labels.text.fill',  stylers: [{color: '#515c6d'}]},{  featureType: 'water',  elementType: 'labels.text.stroke',  stylers: [{color: '#17263c'}]}]
+
+        });
+        var marker1 = new google.maps.Marker({
+            position: new google.maps.LatLng(location.latitude, location.longitude),
+            map: map,
+            icon: '<?php echo base_url("/assets/home/images/user.png"); ?>',
+            title: 'You',
+            animation: google.maps.Animation.BOUNCE
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content:  'You'
+        });
+            infowindow.open(marker1.get('map'), marker1);
+            /*icon marke*/
+            var markeicon = "<?php echo base_url('./assets/home/images/marke.png'); ?>";
+            /*check lengh*/
+            if(jsondata.length > 0){
+                for (i = 0; i < jsondata.length; i++) {
+                    /*set marker*/
+                    marker =  new google.maps.Marker({      
+                                  position: new google.maps.LatLng(jsondata[i].AddressInfo.Latitude, jsondata[i].AddressInfo.Longitude),
+                                  map: map,
+                                  icon: markeicon,
+                                  animation: google.maps.Animation.DROP,
+                                  title: jsondata[i].AddressInfo.Title
+                              });
+                    openinfimodal(marker, jsondata[i]);
+                }
+            }
+            $(".ajax_loder").hide();
+            $(".ajax_loder .status").hide();
+    }
+    /*open popup click on mark */
+    function openinfimodal(marker, jsondatasingal) {
+        marker.addListener('click', function() {
+            $('#mappopuinfohtml').html('<div class="mb-4">'+
+
+                            '<h5 class="grrn-text">Provider</h5>'+
+
+                            '<p class="DataProvider m-0">'+ (jsondatasingal.OperatorInfo ? jsondatasingal.OperatorInfo.Title : '' )+' - '+ (jsondatasingal.StatusType ? jsondatasingal.StatusType.Title : jsondatasingal.StatusType) +'</p>'+
+
+                            '<p class="m-0">Verified = '+((jsondatasingal.IsRecentlyVerified == false) ? "No" : "Yes")+', Last Verified = '+((jsondatasingal.DateLastVerified == null) ? 'Not Available': jsondatasingal.DateLastVerified)+'</p>'+
+
+                        '</div>'+
+
+                        '<div class="mb-4">'+
+
+                            '<h5 class="grrn-text">Addres</h5>'+
+
+                            '<p class="m-0">'+jsondatasingal.AddressInfo.AddressLine1+', '+jsondatasingal.AddressInfo.Title+'</p>'+
+
+                            '<p class="m-0">Longitude '+jsondatasingal.AddressInfo.Longitude+', Latitude '+jsondatasingal.AddressInfo.Latitude+'</p>'+
+
+                        '</div>'+
+
+                        '<div class="mb-4">'+
+
+                            '<h5 class="grrn-text">Usage</h5>'+
+
+                            '<p class="m-0">Membership Required = '+ ( jsondatasingal.UsageType ? jsondatasingal.UsageType.Title : 'Null' )+'</p>'+
+
+                        '</div>'+
+
+                        '<div class="mb-4">'+
+
+                            '<h5 class="grrn-text">Plug Type and Capacity</h5>'+
+
+                            '<p class="m-0">Power = '+ ( jsondatasingal.Connections ? jsondatasingal.Connections[0].PowerKW : '' )+'</p>'+
+
+                            '<p class="m-0">Chargin Point = '+jsondatasingal.NumberOfPoints+', '+((jsondatasingal.GeneralComments == null) ? 'Not Available' : jsondatasingal.GeneralComments)+'</p>'+
+
+                        '</div>'+
+
+                        "<a href='<?php echo base_url("/login"); ?>' class='btn btn-block  btn-outline-primary' >Need more information? Let's Log In</a>");
+
+            $('#exampleModalform').modal('show');
+        });
+    }
 </script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&key=AIzaSyDELpqMi27VwVMB44JliiQG3wSDAYEuG_c&callback=maploadbeforecall" async=""></script>
