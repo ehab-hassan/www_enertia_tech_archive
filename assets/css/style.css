@@ -1,8 +1,4 @@
-/*
-Template Name: Amezia - Responsive Bootstrap 4 Admin Dashboard
-Author: Themesbrand
-File: Main Css File
-*/
+
 /*
 1. Google Font
 2. General
@@ -71,7 +67,7 @@ body {
   margin: 0;
   overflow-x: hidden;
   font-size: 14px;
-  background-color: #f2f5f7;
+  background-color: #fff;
   font-family: "Rubik", sans-serif;
   padding-bottom: 60px;
 }
@@ -4607,4 +4603,19 @@ input[switch="purple"]:checked + label {
 .min-hirght{
   min-height: 94px;
 }
-/*custome style for extra use*/
+/*loader*/
+/* Absolute Center Spinner */
+.loading {
+  position: fixed;
+  z-index: 999;
+  height: 17em;
+  width: 18em;
+  overflow: visible;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+}
+/*custome style for extra use

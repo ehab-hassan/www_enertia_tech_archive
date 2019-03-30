@@ -99,7 +99,7 @@ CREATE TABLE `ev_user_cars` (
   `LastUpdated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `ID` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,15 +114,13 @@ CREATE TABLE `ev_users` (
   `UserName` varchar(555) COLLATE utf8mb4_unicode_ci NOT NULL,
   `UserEmail` varchar(555) COLLATE utf8mb4_unicode_ci NOT NULL,
   `UserPhone` varchar(555) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `UserOTP` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `UserSecret` varchar(555) COLLATE utf8mb4_unicode_ci NOT NULL,
   `UserIP` varchar(555) COLLATE utf8mb4_unicode_ci NOT NULL,
   `UserLoginType` enum('Social','Regular') COLLATE utf8mb4_unicode_ci NOT NULL,
   `UserLastLogin` datetime NOT NULL,
   `UserSignupDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `Userstep` enum('1','2','3') COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -134,4 +132,4 @@ CREATE TABLE `ev_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-29  9:53:35
+-- Dump completed on 2019-03-30  8:05:02

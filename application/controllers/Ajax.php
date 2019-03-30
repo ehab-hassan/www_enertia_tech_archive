@@ -168,8 +168,8 @@ class Ajax extends CI_Controller {
 	}
 
 	/*Get Lat Long using ip address*/
-	function GetLatLong($user_ip=null)
-	{
+	function GetLatLong($user_ip)
+	{	
 		$geo = unserialize(file_get_contents("http://www.geoplugin.net/php.gp?ip=$user_ip"));
 		if (!empty($geo)) {
 			
