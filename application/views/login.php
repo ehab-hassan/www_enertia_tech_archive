@@ -1,6 +1,6 @@
 <div class="row">
 
-    <div class="col-lg-3 col-md-4 pr-0 h-100vh">
+    <div class="col-lg-3 col-md-4 h-100vh">
 
         <div class="card mb-0 shadow-none h-100vh">
 
@@ -196,19 +196,13 @@
 
                             <div class="col-md-6 col-sm-6 col-xs-12 mt-3">
 
-                                <button type="button" class="btn btn-googleplus col-md-12">
+                                <button type="button" class="btn btn-googleplus col-md-12 googleplus" >
 
                                     <i class="fa fa-google-plus mr-2"></i> Google+
 
                                 </button>
 
                             </div>
-
-
-
-                          
-
-
 
                         </div>
 
@@ -242,7 +236,7 @@
 
 
 
-                    <p class="mb-0"> ©2019 - ENERTIA - Dubai <img src="<?php echo base_url('assets/images/footer.png'); ?>" width="50"> by ThreeFold</p>
+                    <?php $this->view('form_footer'); ?>
 
 
 
@@ -261,4 +255,3 @@
     </div>
 
 </div>
-

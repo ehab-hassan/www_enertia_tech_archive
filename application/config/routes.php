@@ -1,15 +1,5 @@
 <?php
-
-
-
 defined('BASEPATH') OR exit('No direct script access allowed');
-
-
-
-
-
-
-
 /*
 
 
@@ -206,7 +196,7 @@ $route['default_controller'] = 'login/index';
 
 
 
-$route['404_override'] = '';
+$route['404_override'] = 'E404';
 
 
 
@@ -361,3 +351,16 @@ $route['logout'] = "dashboard/logout";
 /*opencharg api*/
 
 $route['getlatlong/(:any)'] = "ajax/GetLatLong/$1";
+
+/*station view*/
+$route['station/add'] = "station/station_add";
+// $route['station/edit/(:num)'] = "station/station_edit/$1";
+$route['station/(:num)'] = "station/index/$1";
+
+/*station add in db*/
+$route['station/AddStation'] = "station/add_station";
+$route['station/ImagesUpload'] = "station/UploadImages";
+
+// Get station details
+// $route['station/edit/(:id)'] = "station/GetStationDetails";
+$route['station/edit_station'] = "station/edit_station";

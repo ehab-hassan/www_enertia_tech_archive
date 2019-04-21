@@ -143,7 +143,7 @@ class Ajax extends CI_Controller {
 		// $data = array();
 		// $userdata = $this->user->get_by_id($UserID);
 		// if ($userdata->UserOTP == '') {
-			$otp = rand(1000,9999);
+			echo $otp = rand(1000,9999);
 			$this->session->set_userdata('otp',$otp);
 			// $data_arr=array(
 			// 	'UserOTP' => $otp,

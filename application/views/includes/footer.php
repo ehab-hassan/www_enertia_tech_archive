@@ -398,8 +398,10 @@
 
     $(document).ready(function(){  
 
+        $('.googleplus').click(function(){
+            $('.r_success_msg').html('<div class="alert alert-danger mb-0 alert-dismissible fade show d-flex align-items-center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><i class="mdi mdi-check-circle mr-2"></i>Error ! Google+ plus method not available. please continue to facebook.</div>');
+        });
         /*check email*/
-
         $('#email').change(function(){  
 
            var email = $('#email').val(); 
@@ -1111,97 +1113,50 @@
     } 
 
     function initMap() {
-
         $(".ajax_loder").show();
-
         $(".ajax_loder .status").show();
-
         var latitudeAndLongitude=document.getElementById("latitudeAndLongitude"),
-
         location={ latitude:'', longitude:''};
-
         if (navigator.geolocation){
-
             var options = {};
-
             navigator.geolocation.getCurrentPosition(
-
             function success(position) {
-
                 location_check = true;
-
                 console.log(position);
-
                 showPosition(position);
-
             },
-
             function error(error_message) {
-
-
-
                 location_check = false;
-
                 $.ajax({  
-
                      url:"//jsonip.com",  
-
                      method:"get",  
-
                      dataType: 'jsonp',
-
                      crossDomain: true,
-
                      success:function(res){ 
-
                         console.log(res);
-
                         $.ajax({
-
                             url: 'getlatlong/'+res.ip,
-
                             type: 'get',
-
                             dataType: 'json',
-
                             success: function(data) {
-
                                 console.log(data);
-
                                 location.latitude=data.geoplugin_latitude;
-
                                 location.longitude=data.geoplugin_longitude;
-
                                 $.ajax({
-
                                     url : 'https://api.openchargemap.io/v2/poi/?output=json&latitude='+location.latitude+'&longitude='+location.longitude,
-
                                     method : 'get',
-
                                     dataType: 'json',
-
                                     contentType: "application/json",                 
-
                                     success: function(data) {
-
                                         pointmap(data,location);
-
                                     }
-
                                 });
-
                             }
-
                         });
-
                      }  
-
                 });  
-
             },options);
-
         }else{ latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser."; }
-
     }
 
     function maploadbeforecall(){
@@ -1265,7 +1220,7 @@
                       scrollwheel: false,
 
                       mapTypeId: 'roadmap',
-
+                      gestureHandling: 'greedy',
                       mapTypeId: google.maps.MapTypeId.ROADMAP,
 
                       // styles: [{elementType: 'geometry', stylers: [{color: '#242f3e'}]},{elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},{elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},{  featureType: 'administrative.locality',  elementType: 'labels.text.fill',  stylers: [{color: '#d59563'}]},{  featureType: 'poi',  elementType: 'labels.text.fill',  stylers: [{color: '#d59563'}]},{  featureType: 'poi.park',  elementType: 'geometry',  stylers: [{color: '#263c3f'}]},{  featureType: 'poi.park',  elementType: 'labels.text.fill',  stylers: [{color: '#6b9a76'}]},{  featureType: 'road',  elementType: 'geometry',  stylers: [{color: '#38414e'}]},{  featureType: 'road',  elementType: 'geometry.stroke',  stylers: [{color: '#212a37'}]},{  featureType: 'road',  elementType: 'labels.text.fill',  stylers: [{color: '#9ca5b3'}]},{  featureType: 'road.highway',  elementType: 'geometry',  stylers: [{color: '#746855'}]},{  featureType: 'road.highway',  elementType: 'geometry.stroke',  stylers: [{color: '#1f2835'}]},{  featureType: 'road.highway',  elementType: 'labels.text.fill',  stylers: [{color: '#f3d19c'}]},{  featureType: 'transit',  elementType: 'geometry',  stylers: [{color: '#2f3948'}]},{  featureType: 'transit.station',  elementType: 'labels.text.fill',  stylers: [{color: '#d59563'}]},{  featureType: 'water',  elementType: 'geometry',  stylers: [{color: '#17263c'}]},{  featureType: 'water',  elementType: 'labels.text.fill',  stylers: [{color: '#515c6d'}]},{  featureType: 'water',  elementType: 'labels.text.stroke',  stylers: [{color: '#17263c'}]}]
@@ -1428,4 +1383,4 @@
 
 </script>
 
-<script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&key=AIzaSyDELpqMi27VwVMB44JliiQG3wSDAYEuG_c&callback=maploadbeforecall" async=""></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&key=<?php echo mapkey; ?>&callback=maploadbeforecall" async=""></script>

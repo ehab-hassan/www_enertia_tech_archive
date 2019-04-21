@@ -60,7 +60,7 @@
 html {
   position: relative;
   min-height: 100%;
-  background-color: #f2f5f7;
+  background-color: #fff;
 }
 
 body {
@@ -260,46 +260,52 @@ strong {
 }
 
 .topbar .topbar-left {
-  background-color: #44a2d2;
+  display: flex;
   float: left;
   text-align: center;
   height: 70px;
   position: relative;
-  margin-right: 26px;
+  /*margin-right: 26px;*/
   z-index: 1;
+  vertical-align: middle;
 }
 
 .topbar .topbar-left .logo {
   line-height: 70px;
+  margin: auto auto;
+  padding: 0 15px;
 }
 
-.topbar .topbar-left .logo .logo-sm {
-  height: 18px;
-}
+.topbar .topbar-left .logo .top-logo {
+  /*width: 100%;*/
+} 
 
 .topbar .topbar-left .logo .logo-lg {
   height: 14px;
 }
 
 .topbar .topbar-main {
-  background-color: #44a2d2;
+  display: inline-flex;
+  width: 100%;
 }
 
 .topbar .container-fluid {
-  width: 90%;
+  /*width: 90%;*/
 }
 
 .navbar-custom {
-  background: #44a2d2;
   min-height: 70px;
   position: relative;
+  float: right;
+  width: 100%;
+  text-align: right;
 }
 
 .navbar-custom .nav-link {
-  padding: 0 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
+  padding: 0 0.65rem;
   line-height: 70px;
-  max-height: 70px;
+  height: 70px;
+  display: initial;
 }
 
 .navbar-custom .nav-link .nav-icon {
@@ -316,8 +322,8 @@ strong {
 }
 
 .navbar-custom .topbar-nav li.show .nav-link {
-  background-color: #50a8d5;
-  color: #ffffff;
+  /*background-color: #50a8d5;*/
+  /*color: #ffffff;*/
 }
 
 .button-menu-mobile {
@@ -531,13 +537,13 @@ input.search-input:-ms-input-placeholder {
 
 @media (max-width: 1024px) {
   .topbar .topbar-left {
-    width: 70px;
+    /*width: 70px;*/
   }
   .topbar .topbar-left .logo-lg {
     display: none;
   }
   .topbar .navbar-custom {
-    margin-left: 70px;
+    
   }
   .topbar .topbar-left .logo .logo-sm {
     height: 32px;
@@ -548,11 +554,11 @@ input.search-input:-ms-input-placeholder {
 5. Topnav
    ====== */
 .wrapper {
-  padding-top: 140px;
+  padding-top: 70px;
 }
 
 .wrapper .container-fluid {
-  width: 90%;
+  /*width: 90%;*/
 }
 
 .navbar-custom-menu {
@@ -562,7 +568,7 @@ input.search-input:-ms-input-placeholder {
 }
 
 .navbar-custom-menu .container-fluid {
-  width: 90%;
+  /*width: 90%;*/
 }
 
 .navbar-custom-menu .has-submenu.active a {
@@ -956,12 +962,14 @@ input.search-input:-ms-input-placeholder {
   border-top: 1px solid #dee2e6;
   bottom: 0;
   padding: 18px 30px 19px;
-  position: absolute;
+  /*position: absolute;*/
   right: 0;
   left: 0;
   color: #6c757d;
 }
-
+.footer .col-12{
+  text-align: center;
+}
 /* ======
 7. Waves
    ====== */
@@ -2670,8 +2678,8 @@ code {
 }
 
 .accordion .card-header {
-  background-color: rgba(233, 236, 239, 0.5);
-  border: 1px solid rgba(206, 212, 218, 0.5);
+  background-color: #efefef;
+  border: 1px solid #efefef;
   padding: 0 12px;
 }
 
@@ -2701,24 +2709,25 @@ code {
 }
 
 #accordionExample2 .card-header h5 button.collapsed::before {
-  content: '\f107';
+  content: '\f105';
   -webkit-transform: rotate(-180deg);
-          transform: rotate(-180deg);
+  transform: rotate(-180deg);
 }
 
 #accordionExample2 .card-header h5 button::before {
   content: '\f106';
   font-family: "FontAwesome";
   position: absolute;
-  top: 10px;
-  right: 25px;
+  top: 7px;
+  right: 5px;
+  font-size: 22px;
   -webkit-transition: -webkit-transform .25s;
   transition: -webkit-transform .25s;
   transition: transform .25s;
   transition: transform .25s, -webkit-transform .25s;
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
-  color: #44a2d2;
+  color: #2e2e2e;
 }
 
 /* ======
@@ -4556,9 +4565,14 @@ input[switch="purple"]:checked + label {
 .h-100vh {
     height: 100%;
 }
-@media (max-width: 767px) {
+@media (min-width: 767px) {
   .h-100vh-mobile {
     height: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .h-100vh-s {
+      height: 100%;
   }
 }
 
@@ -4619,3 +4633,334 @@ input[switch="purple"]:checked + label {
   text-align: center;
 }
 /*custome style for extra use
+
+
+/*dashboard*/
+.dash_menu{
+  background-color: #ffffff !important;
+}
+.map-area{
+  position: relative;
+  height: 600px;
+}
+.map-area .map-hieght{
+  height: 600px;
+}
+.map-area .user_legend{
+  position: absolute;
+  bottom: 24px;
+  right: 76px;
+  background: #fff;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+.map-area .user_legend .green{
+  color: #54B56C;
+}
+.map-area .user_legend .orange{
+  color: #F29B34;
+}
+.map-area .form-horizontal{
+  position: absolute;
+  top: 13px;
+}
+.map-area .form-horizontal .dropdown-toggle::after{
+    display: contents;
+}
+.map-area .form-horizontal .dropdown-toggle i{
+  font-size: 23px;
+  color: #222222b0;
+}
+.map-area .form-horizontal .dropdown-toggle{
+  padding: 7px 8px;
+  background: #fff;
+  border-radius: 0px;
+  border: 0px;
+  border-right: 1px solid #2222223b;
+}
+.map-area .form-horizontal .form-group{
+  box-shadow: 0px 1px 1px 1px #47474752;
+}
+.map-area .form-horizontal .form-control{
+  border-radius: 0px;
+  border: 0px solid #ced4da;
+}
+.map-area .form-horizontal .dropdown-toggle:hover,
+.map-area .form-horizontal .dropdown-toggle:focus,
+.map-area .form-horizontal .show .dropdown-toggle{
+  background-color: #fff !important;
+  border: 0px solid #3197cc00;
+  border-right: 1px solid #2222223b;
+}
+.map-area .form-horizontal .dropdown-menu{
+  position: absolute;
+  will-change: transform;
+  width: 100%;
+  border-radius: 0px;
+  border-color: rgba(34, 34, 34, 0.23);
+  transform: translate3d(0px, 24px, 0px);
+  top: 0px; 
+  left: 0px;
+}
+.btn-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-primary.dropdown-toggle:focus, .btn-primary.focus, .btn-primary:focus, .btn-outline-primary.focus, .btn-outline-primary:focus{
+    -webkit-box-shadow: 0 0 0 2px  rgba(68, 162, 210, 0);
+    box-shadow: 0 0 0 2px  rgba(68, 162, 210, 0);
+}
+.map-area .form-horizontal .input-group-append .input-group-text{
+  background-color: #fff;
+  border: 0px;
+}
+.map-area .fltter-heading{
+  padding: 10px;
+  border-bottom: 1px solid #dee2e6;
+  margin: 0;
+}
+.w-100{
+  width: 100%;
+}
+.t-left{
+  text-align: left;
+}
+.none-link, .none-link:hover, .none-link:focus, .none-link:active{
+  color: #2e2e2e !important;
+}
+.map-area .collapse{
+  background-color: #efefef33;
+  border: 1px solid #efefef;
+  padding:0px 24px;
+}
+.map-area .custom-control-label {
+    position: relative;
+    margin-bottom: 0;
+    font-size: 15px;
+    font-weight: 400;
+    color: #222;
+}
+.text-center{
+  text-align: center;
+}
+/*dashboard*/
+
+/*auto search map*/
+ #infowindow-content .title {
+    font-weight: bold;
+  }
+
+  #infowindow-content {
+    display: none;
+  }
+  #searchAddressMap #infowindow-content {
+    display: inline;
+  }
+/*auto search map*/
+
+/*For add view */
+.success-msg{
+    display: none;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    background: #007bff !important;
+    color: white;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;   
+    cursor: inherit;
+    display: block;
+}
+.pip img{
+  width: 120px;
+  height: 100px;
+  margin-bottom: 8px;
+}
+.images-preview{
+  width: 200%;
+}
+.pip{
+  position: relative;
+  margin-right: 4px;
+}
+.remove{
+  position: absolute;
+  right: 2px;
+  font-size: 14px;
+  color: #007bff;
+  background: white;
+  border: 1px solid #007bff;
+  padding: 0px 3px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 11px;
+  top: -43px;
+}
+@media only screen and (max-width: 575px){
+  .btn-file{
+    background: transparent !important;
+    color: #007bff !important;
+    font-size: 26px;
+    cursor: pointer;
+  }
+  .add_image{
+    display: none;
+  }
+}
+.dashboard-map-icon{
+  z-index: 1;
+  bottom: 28;
+  text-align: center;
+  width: 100%;
+}
+.dashboard-map-icon i{
+  background: #007bff;
+  color: white;
+  padding: 8px 10px;
+  font-size: 26px;
+  border-radius: 24px;
+  margin: 0px 8px;
+  cursor: pointer;
+}
+.dashboard-map-icon i:hover{
+  background: #0868ce;
+}
+/*Station view*/
+.station-view-back-btn{
+  width: 100%;
+}
+.station-view-top-r-btn{
+  border: 2px solid lightgray;
+  color: gray;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 15px;
+}
+.status-cummunity-btn{
+  padding: 2px 15px 2px 15px;
+}
+.station-view-bottom-r-btn {
+  border: 4px solid lightgray;
+  color: gray;
+  font-size: 30px;
+  padding: 15px;
+  border-radius: 4px;
+}
+.status-bottom-center-txt{
+  font-weight: 500;
+}
+.user_legend{
+  top: 13px;
+  right: 195px !important;
+  bottom: auto !important;
+}
+.add_plug i, .remove_plug i{
+  border-radius: 0px;
+}
+.add_plug:hover .add_plug_icon{
+  cursor: pointer;
+  color: white;
+  border-color: white;
+}
+.add_plug:hover{
+  background: #007bff;
+}
+.remove_plug:hover .remove_plug_icon{
+  cursor: pointer;
+  color: white;
+  border-color: white;
+}
+.remove_plug:hover{
+  background: #007bff;
+}
+.gallery-icon-wrapper{
+  border: 2px solid lightgray;
+  height: 140px;
+  border-radius: 7px;
+  position: relative;
+}
+.btn-gallery{
+  overflow: hidden;
+  background: transparent;
+  color: #007bff;
+  font-size: 62px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+}
+.mobile-camera{
+  display: none;
+}
+.stations-list-view{
+  display: none;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  background: white;
+}
+.stations-list-view .close-btn{
+  right: 0;
+  position: absolute;
+  z-index: 0;
+  top: 73px;
+  right: 29px;
+  font-size: 32px;
+  color: #0066ff;
+  cursor: pointer;
+  z-index: 1;
+}
+.red-placeholder::-webkit-input-placeholder {
+    color: red;
+}
+
+/* For step form*/
+.second-slide, .third-slide, .fourth-slide{
+  display: none;
+} 
+.slides-btn{
+  width: 100%;
+}
+.image_1_preview{
+  min-height: 110px;
+}
+@media only screen and (max-width: 992px){
+  .station-view-top-r-btn-w{
+    margin-top: 30px;
+  }
+  .station-view-top-r-btn{
+    font-size: 24px;
+    width: 75%;
+  }
+}
+@media only screen and (max-width: 575px){
+  .station-view-bottom-title{
+    margin-top: 10px !important;
+  }
+  .mobile-camera{
+    display: block;
+  }
+  .desktop-view{
+    display: none;
+  }
+}
+@media only screen and (max-width: 475px){
+  .station-view-top-r-btn{
+    width: 100%;
+  }
+}
+
+
+

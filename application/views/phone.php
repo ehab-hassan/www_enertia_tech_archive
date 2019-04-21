@@ -1,6 +1,6 @@
 <div class="row">
 
-    <div class="col-lg-3 col-md-4 pr-0 h-100vh-mobile">
+    <div class="col-lg-3 col-md-4">
 
         <div class="card mb-0 shadow-none">
 
@@ -200,8 +200,7 @@
 
     </div>
 
-    <div class="col-lg-9 col-md-8 p-0  d-flex justify-content-center  h-100vh-mobile" id="map">
+    <div class="col-lg-9 col-md-8 p-0  d-flex justify-content-center h-100vh-s" id="map">
 
     </div>
-
 </div>

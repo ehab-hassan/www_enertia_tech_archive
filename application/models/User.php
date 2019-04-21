@@ -120,4 +120,5 @@ class User extends CI_Model{
         $this->db->update('ev_users',$data_arr, array('UserID' => $UserID));
         return $UserID;
     }
+
 }

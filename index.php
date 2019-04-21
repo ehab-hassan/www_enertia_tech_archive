@@ -65,7 +65,7 @@ if ($_SERVER['SERVER_NAME']=='localhost') {
 	define('password', 'UytRaszXcv127l');
 	define('database', 'enertia');
 }
-
+define('mapkey', 'AIzaSyD9g_Jj2qghU7Ta1UeuEw1HGzpmkqT4EJc');
 define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 date_default_timezone_set('Asia/Dubai');
 require_once './vendor/autoload.php';
