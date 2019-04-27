@@ -9,30 +9,11 @@
     
     /*dashboard*/
     public function index(){
-  		$data = array();
-  	 	$this->template->write_view('content', 'dashboard/index', $data, TRUE);
+     
+  	 	$this->template->write_view('content', 'dashboard/index', '', TRUE);
       $this->template->render();
     }
 
-    /*station details*/
-    public function station_view($stationId)
-    {
-      $data = array();
-      $this->template->write_view('content', 'dashboard/station/view', $data, TRUE);
-      $this->template->render();
-    }
-
-    public function station_add()
-    {
-      $data = array();
-      $this->template->write_view('content', 'dashboard/station/add', $data, TRUE);
-      $this->template->render();
-    }
-
-    public function station_add_post()
-    {
-      
-    }
   	/*logout*/
   	public function logout(){
 	    $this->load->helper('security');

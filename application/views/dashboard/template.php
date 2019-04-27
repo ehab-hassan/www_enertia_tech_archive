@@ -1,6 +1,6 @@
 <html lang="en"> 
 <head>
-	<?php  $this->load->view('dashboard/includes/head', array('title' => 'ATW | All The Way Green')); ?>
+	<?php  $this->load->view('dashboard/includes/head', array('title' => 'enertia.tech | EV Platform')); ?>
 </head>
 <body class="body-white pb-0">
 	<?php 
@@ -11,8 +11,6 @@
 		<?php echo $content; $this->load->view('dashboard/includes/footer'); ?>
    	</div>
     <!-- end page-wrapper -->
-    <?php 
-	$this->load->view('dashboard/includes/script'); 
-	?>
+    
 </body>
 </html>

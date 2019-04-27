@@ -15,15 +15,17 @@ class Ajax extends CI_Controller {
 	function __construct()
 
   	{
-
     	parent::__construct();
-
-		$this->load->model("Main_model");  
-
-		$this->load->model("user");  
-
+		$this->load->model( array("user", "Main_model", "Plugtype_Model", "Power_Model") );
+		$this->load->model("AccessType_Model");
+		$this->load->model("Payment_Model");
+		// $this->load->model("Plugtype_Model");
+		$this->load->model("Point_Model");
+		// $this->load->model("Power_Model");
+		$this->load->model("Provider_Model");
+		$this->load->model("Supplytype_Model");
+		$this->load->model("Voltage_Model");  
 		$this->load->library('aws_sdk');
-
   	}
 
 
@@ -173,10 +175,44 @@ class Ajax extends CI_Controller {
 		$geo = unserialize(file_get_contents("http://www.geoplugin.net/php.gp?ip=$user_ip"));
 		if (!empty($geo)) {
 			
-			echo  json_encode( array('geoplugin_latitude' => (float)$geo['geoplugin_latitude'],'geoplugin_longitude' => (float)$geo['geoplugin_longitude'] ));
+			echo  json_encode( array('geoplugin_latitude' => (float)$geo['geoplugin_latitude'], 'geoplugin_longitude' => (float)$geo['geoplugin_longitude'] ));
 		}else{
 			echo json_encode(array('geoplugin_status' => '500'));
 		}
+	}
+
+	/*get ev_plugtype*/
+	public function get_plugtype()
+	{
+		$plugtype = $this->Plugtype_Model->get();
+		if (count((array) $plugtype) > 0) {  
+		 	$this->output->set_output(json_encode(array('status' => 'true','data' => $plugtype)));  
+		} else {  
+		 	$this->output->set_output(json_encode(array('status' => 'false'))); 
+		}
+	}
+	/*get ev_power*/
+	public function get_power()
+	{
+		$Power = $this->Power_Model->get();
+		if (count((array) $Power) > 0) {  
+		 	$this->output->set_output(json_encode(array('status' => 'true','data' => $Power)));  
+		} else {  
+		 	$this->output->set_output(json_encode(array('status' => 'false'))); 
+		}
+	}
+
+	// Get stations fields for show in add station form
+	public function GetFields() {
+		$result['provider'] = $this->Provider_Model->get();
+		$result['payment'] = $this->Payment_Model->get();
+		$result['access_type'] = $this->AccessType_Model->get();
+		$result['plug_type'] = $this->Plugtype_Model->get();
+		$result['power'] = $this->Power_Model->get();
+		$result['supply_type'] = $this->Supplytype_Model->get();
+		$result['current_voltage'] = $this->Voltage_Model->get();
+		$result['points'] = $this->Point_Model->get();
+		print_r(json_encode($result));
 	}
 }
 

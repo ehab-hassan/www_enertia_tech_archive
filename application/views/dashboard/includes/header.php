@@ -27,24 +27,10 @@
                             <a class="nav-link waves-effect waves-light waves-effect" href="#">                                    
                                 <i class="mdi mdi-wallet nav-icon"></i>                          
                             </a>                            
-                        </li>                                
-                        <li class="">                                
-                            <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">                                    
-                                <i class="mdi mdi-account nav-icon"></i>                                
-                            </a> 
-
-                            <div class="dropdown-menu dropdown-menu-right">                                    
-                                <a class="dropdown-item" href="#">
-                                    <i class="dripicons-user text-muted mr-2"></i> Profile
-                                </a>                                    
-                                <div class="dropdown-divider"></div>                                    
-                                <a class="dropdown-item" href="<?php //echo base_url('logout'); ?>">
-                                    <i class="dripicons-exit text-muted mr-2"></i> Logout
-                                </a>                                
-                            </div>                            
-                        </li>  -->
+                        </li>      -->                          
+                        
                         <li class="">  
-                            <span class="text-muted" style="margin-right: -10px;">
+                            <span class="text-muted header-language" style="margin-right: -10px;">
                                 Language
                             </span>                        
                             <a class="nav-link dropdown-toggle waves-effect waves-light lang_append" data-toggle="dropdown" href="javascript: void(0);" role="button" aria-haspopup="false" aria-expanded="false" style="padding-bottom: 27px;"> 
@@ -109,6 +95,25 @@
                                 </a>                                
                             </div>                            
                         </li> 
+
+                        <li class="">  
+                            <a class="nav-link waves-effect waves-light waves-effect" href="<?php echo base_url('logout'); ?>" title="Logout">
+                                <i class="dripicons-exit mr-2" style="font-size: 20px; color: #007bff;"></i>
+                            </a>                              
+                            <!-- <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">                                    
+                                <i class="mdi mdi-account nav-icon"></i>                                
+                            </a> 
+
+                            <div class="dropdown-menu dropdown-menu-right">                                    
+                                <a class="dropdown-item" href="#">
+                                    <i class="dripicons-user text-muted mr-2"></i> Profile
+                                </a>                                    
+                                <div class="dropdown-divider"></div>                                    
+                                <a class="dropdown-item" href="<?php //echo base_url('logout'); ?>">
+                                    <i class="dripicons-exit text-muted mr-2"></i> Logout
+                                </a>                                
+                            </div> -->                            
+                        </li>  
                     </ul>                                    
                 </nav>                    
                 <!-- end navbar-->                

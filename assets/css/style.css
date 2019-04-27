@@ -247,6 +247,12 @@ strong {
 .h-300 {
   height: 300px;
 }
+.h-500 {
+  height: 500px;
+}
+.h-400 {
+  height: 400px;
+}
 
 /* ======
 4. Topbar
@@ -4275,7 +4281,7 @@ input[switch="purple"]:checked + label {
 .activity {
   position: relative;
   border-left: 1px solid #f8f9fa;
-  margin-left: 16px;
+  margin: 16px;
 }
 
 .activity .item-info {
@@ -4574,6 +4580,26 @@ input[switch="purple"]:checked + label {
   .h-100vh-s {
       height: 100%;
   }
+  .header-language{
+    display: none;
+  }
+  .map-area .user_legend{
+    right: auto !important;
+    top: 59px;
+    left: 14px;
+  }
+  .gm-style-mtc{
+    display: none;
+  }
+  #parking{
+    float: none !important;
+  }
+  .parking-lable{
+    padding-left: 15px !important;
+  }
+  .wifi-wraper{
+    float: none !important;
+  }
 }
 
 .tab_wzard{
@@ -4599,20 +4625,20 @@ input[switch="purple"]:checked + label {
     top: 5px;
 }
 .result_msg i{
-	font-size: 20px
+  font-size: 20px
 }
 .resend{
-	text-align: right;
-	font-size: 14PX;
+  text-align: right;
+  font-size: 14PX;
 }
 .hide {
-	display: none !important;
+  display: none !important;
 }
 .show{
-	display: block !important;
+  display: block !important;
 }
 .p-relative{
-	position:relative;
+  position:relative;
 }
 .min-hirght{
   min-height: 94px;
@@ -4819,6 +4845,8 @@ input[switch="purple"]:checked + label {
   bottom: 28;
   text-align: center;
   width: 100%;
+  right: 51px;
+  padding-left: 51px;
 }
 .dashboard-map-icon i{
   background: #007bff;
@@ -4909,7 +4937,10 @@ input[switch="purple"]:checked + label {
   position: absolute;
   width: 100%;
   top: 0;
+  left: 0;
   background: white;
+  right: 0;
+  bottom: 0;
 }
 .stations-list-view .close-btn{
   right: 0;
@@ -4964,3 +4995,37 @@ input[switch="purple"]:checked + label {
 
 
 
+.itemimage{
+  text-align: center;
+}
+.sliderimage{
+  width: auto !important;
+  margin: auto !important;
+}
+.remove_popup{
+  position: absolute;
+  width: 70%;
+  padding: 16px 0px;
+  text-align: center;
+  top: 50px;
+  left: 16px;
+  z-index: 1;
+  background: #2d7bf4;
+  border-radius: 12px;
+  display: none;
+  margin-top: 6px;
+}
+.remove_popup button{
+  background: white;
+  color: #2d7bf4;
+  border: 1px solid #0acf97;
+  margin: 0px 10px 0px 0px;
+  width: 50px;
+  padding: 2px 0px;
+}
+.image_1_preview{
+  width: 100%;
+}
+.add_plug_section .connector-section-edit:first-child{
+  margin-top: 0px !important;
+}
