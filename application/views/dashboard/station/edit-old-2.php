@@ -152,39 +152,33 @@
                                     <div class="col-sm-4 col-md-4 pt-4">
                                         <div class="container">
                                             <div class="form-group row">
-                                                <div class="container">
-                                                    <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pr-0 btn-toggle-lable pl-0  open_24_7">24 / 7 Open
-                                                        <button type="button" class="btn btn-sm btn-toggle focus active" data-toggle="button" aria-pressed="true" autocomplete="off" id="open24">
-                                                            <div class="handle"></div>
-                                                        </button>
-                                                    </label>
-                                                </div>
+                                                <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pr-0">24 / 7 Open
+                                                    <button type="button" class="btn btn-sm btn-toggle focus active" data-toggle="button" aria-pressed="true" autocomplete="off" id="open24">
+                                                        <div class="handle"></div>
+                                                    </button>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
                                    <div class="col-sm-4 col-md-4 pt-4">
                                         <div class="container">
                                             <div class="form-group row">
-                                                <div class="container">
-                                                    <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pr-0 btn-toggle-lable">Parking
-                                                        <button type="button" class="btn btn-sm btn-toggle float-right focus active" data-toggle="button" aria-pressed="true" autocomplete="off" id="parking">
-                                                            <div class="handle"></div>
-                                                        </button>
-                                                    </label>
-                                                </div>
+                                                <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pr-0 parking-lable" style="padding-left: 40px;">Parking
+                                                    <button type="button" class="btn btn-sm btn-toggle float-right focus active" data-toggle="button" aria-pressed="true" autocomplete="off" id="parking">
+                                                        <div class="handle"></div>
+                                                    </button>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4 col-md-4 pt-4">
                                         <div class="container">
                                             <div class="form-group row float-right wifi-wraper">
-                                                <div class="container">
-                                                    <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left btn-toggle-lable pr-0">WiFi
-                                                        <button type="button" class="btn btn-sm btn-toggle focus active" data-toggle="button" aria-pressed="true" autocomplete="off" id="wifi">
-                                                            <div class="handle"></div>
-                                                        </button>
-                                                    </label>
-                                                </div>
+                                                <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left">WiFi
+                                                    <button type="button" class="btn btn-sm btn-toggle focus active" data-toggle="button" aria-pressed="true" autocomplete="off" id="wifi">
+                                                        <div class="handle"></div>
+                                                    </button>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -458,9 +452,7 @@
     </div><!-- container -->
 </div>
 <!-- end page-wrapper -->       
-<?php 
-    $this->load->view('dashboard/includes/script'); 
-?>
+
 <script>
     $(document).ready(function() {
         SetAddFormFields();
@@ -492,9 +484,6 @@
         var url = [];
         var flag = 0;
         $('#images').on('change', function(e) {
-            $('.images-preview').append("<span class='pip' id='preloader'>" +
-                "<img class='imageThumb' src='<?php echo base_url(); ?>assets/images/preloader.gif'>" +
-            "</span>");
             e.preventDefault();
             $.ajax({
                 url: '<?php echo base_url(); ?>station/ImagesUpload',
@@ -512,12 +501,10 @@
                             return parts[parts.length - 1];
                         }
                         if(getExtension(value) == 'mp4' || getExtension(value) == 'ogg' || getExtension(value) == 'video') {
-                            $('#preloader').remove();
                             $('.images-preview').append("<span class='pip'>" +
                             "<img class='imageThumb' src='<?php echo base_url(); ?>assets/images/v1.jpg' title="+(key+flag++)+">" +
                             "<span class='remove mdi mdi-close'></span></span>"); 
                         } else{
-                            $('#preloader').remove();
                             $('.images-preview').append("<span class='pip'>" +
                             "<img class='imageThumb' src="+value+ " title="+(key+flag++)+">" +
                             "<span class='remove mdi mdi-close'></span></span>");
@@ -837,3 +824,6 @@
         } ,1000);
     });
 </script>
+<?php 
+    $this->load->view('dashboard/includes/script'); 
+?>

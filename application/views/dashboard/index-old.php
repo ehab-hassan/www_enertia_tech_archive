@@ -120,14 +120,12 @@
         </div>    
     </div>
     <section class="stations-list-view">
-        
+        <i class="mdi mdi-close-circle-outline close-btn"></i>
         <div class="row justify-content-md-center" style="margin-top: 4.4rem !important;">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 p-0">
                 <div class="card mb-0">                                       
                     <div class="card-body stations-list"> 
-                        <i class="mdi mdi-close-circle-outline close-btn"></i>
                         <h5 class="mt-3" style="margin-left: 30px;"><span class="station_count" id="station_count">0</span> Stations Nearby</h5>
-                        <hr>
                         <div id="station_list1"></div>
                         <div id="station_list2"></div>
                         <!-- <div class="activity row">
@@ -181,6 +179,18 @@
              },
              error: function() {}
         });
+        // $.ajax({  
+        //      url:"<?php echo base_url(); ?>api2",  
+        //      method:"post",  
+        //      data:form.serialize(),  
+        //      dataType:'json',
+        //      success: function( data ) {
+        //         if (data.status == "true") {
+        //             Api2marker(data.data);                    
+        //         }
+        //      },
+        //      error: function() {}
+        // });
         $.ajax({
           // url: "https://api.openchargemap.io/v2/poi/?output=json&latitude=654356&longitude=765765",
           url : "https://api.openchargemap.io/v2/poi/?output=json&latitude="+window.lat+"&longitude="+window.long+"",
@@ -188,7 +198,7 @@
           dataType:'json',                
           success: function(data) {
                 apiJson2 = data;
-                // console.log(data);
+                console.log(data);
                 if(data != null) {
                   Api2marker(data);
                 } 

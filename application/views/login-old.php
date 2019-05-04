@@ -89,21 +89,21 @@
                 console.log(data);
              }
         });
-        $.ajax({  
-             url:"<?php echo base_url(); ?>api2",  
-             method:"post",  
-             data:form.serialize(),  
-             dataType:'json',
-             success: function( data ) {
-                // console.log(data);
-                if (data.status == "true") {
-                    Api2marker(data.data);                    
-                }
-             },
-             error: function( ) {
+        // $.ajax({  
+        //      url:"<?php echo base_url(); ?>api2",  
+        //      method:"post",  
+        //      data:form.serialize(),  
+        //      dataType:'json',
+        //      success: function( data ) {
+        //         // console.log(data);
+        //         if (data.status == "true") {
+        //             Api2marker(data.data);                    
+        //         }
+        //      },
+        //      error: function( ) {
 
-             }
-        });
+        //      }
+        // });
     }
     function clearfiltter() {
         $("#nearestby").attr("checked", true);

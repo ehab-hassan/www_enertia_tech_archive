@@ -219,7 +219,7 @@
       data: $('#filtter_form').serialize(),
       dataType:'json',                 
       success: function(data) {
-        // console.log(data);
+        console.log(data);
         if (data.status == "true") {
           Apimarker(data.data);
         }
@@ -243,40 +243,6 @@
   }
 
   function initMap() {
-    var latitudeAndLongitude=document.getElementById("latitudeAndLongitude"),
-    location={ latitude:'', longitude:''};
-    if (navigator.geolocation){
-      var options = {};
-      navigator.geolocation.getCurrentPosition(
-      function success(position) {
-        location.latitude=position.coords.latitude;
-        location.longitude=position.coords.longitude;
-        setcentermap(location);
-      },
-      function error(error_message) {
-        $.ajax({  
-          url:"//jsonip.com",  
-          method:"get",  
-          dataType: 'jsonp',
-          crossDomain: true,
-          success:function(res){ 
-            $.ajax({
-              url: '<?php echo base_url("getlatlong/"); ?>'+res.ip,
-              type: 'get',
-              dataType: 'json',
-              success: function(data) {
-                location.latitude=data.geoplugin_latitude;
-                location.longitude=data.geoplugin_longitude;
-                setcentermap(location);
-              }
-            });
-          }
-        });
-      },options);
-    }else{ latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";}
-  }
-
-  function initMap2() {
     var latitudeAndLongitude=document.getElementById("latitudeAndLongitude"),
     location={ latitude:'', longitude:''};
     if (navigator.geolocation){
@@ -334,14 +300,11 @@
   }
 
   window.station_count;
-  window.srNumber = 0;
   function Apimarker(jsondata) {
-    srNumber = 1;
     $('#station_list1').empty('');
     window.station_count = 0;
     window.station_count += jsondata.length;
     $('.station_count').text(window.station_count);
-    
     $.each(jsondata, function (index, value) {
       var markeicon = "<?php echo base_url('./assets/images/marke.png'); ?>";
       if ("<?php echo $this->session->userdata('UserID'); ?>" == value.user_id) {
@@ -360,7 +323,7 @@
           distanceService.getDistanceMatrix({
             origins: [new google.maps.LatLng(window.lat, window.long)],
             destinations: [new google.maps.LatLng(value.station_lat, value.station_long)],
-            travelMode: google.maps.TravelMode.DRIVING,
+            travelMode: google.maps.TravelMode.WALKING,
             unitSystem: google.maps.UnitSystem.METRIC,
             durationInTraffic: true,
             avoidHighways: false,
@@ -382,10 +345,10 @@
               var obj = JSON.parse(value.station_attachment);
               // console.log(obj);
               $('#station_list1').append(
-                    '<div class="activity row station_list_stations" >'+
-                        '<div class="col-sm-3"><span style="font-size:14px; margin-right: 10px;">'+(srNumber++)+' )</span><img src="'+(obj != null && obj != '' ? obj[0].url : 'assets/images/No_Image_Available.jpg')+'" style="border-radius: 10px;border: 3px solid #c7c7c7;width: 70px;height: 60px;"></div>'+
-                        '<div class="col-sm-7 station_list_text_box">'+
-                            '<h5 class="mt-0 mb-0" style="cursor:pointer;" onclick="morezoom('+value.station_lat+','+value.station_long+');"><strong>'+value.station_Address+'</strong></h5>'+
+                    '<div class="activity row" >'+
+                        '<div class="col-sm-2"><img src="'+(obj[0].url != null && obj[0].url != '' ? obj[0].url : 'assets/images/No_Image_Available.jpg')+'" style="border-radius: 10px;border: 3px solid #c7c7c7;width: 70px;height: 60px;"></div>'+
+                        '<div class="col-sm-8">'+
+                            '<h5 class="mt-0 mb-0" onclick="morezoom('+value.station_lat+','+value.station_long+');"><strong>'+value.station_Address+'</strong></h5>'+
                             '<p class="text-muted font-13 mb-0"><b>@ '+value.distance+' with '+value.time+' of estimated travel time</b></p>'+
                             '<p mb-0 style="height: 27px;overflow: hidden;">'+value.station_general_comment+'</p>'+
                         '</div>'+
@@ -399,10 +362,9 @@
                                   '<option value="5" selected="">5</option>'+
                               '</select>'+
                           '</div>'+
-                          '<div class="font-10 pb-1" style="">'+
+                          '<div class="font-10" style="">'+
                               '<button class="btn btn-success btn-block">Available</button>'+
                           '</div>'+
-                          '<hr style="background:gray; height:2px;" class="station_devider">'+
                       '</div>'+
                       '<div class="dropdown-divider"></div>'+
                     '</div>');
@@ -418,8 +380,7 @@
   function Api2marker(data) {
     $('#station_list2').empty('');
     var datalen = data.length;
-    // var srNumber = 1;
-    var station_2_count = window.station_count + datalen;
+    station_2_count = window.station_count + datalen;
     $('#station_count').text(station_2_count);
     var markeicon = "<?php echo base_url('./assets/images/marke.png'); ?>";
 
@@ -437,7 +398,7 @@
           distanceService.getDistanceMatrix({
             origins: [new google.maps.LatLng(window.lat, window.long)],
             destinations: [new google.maps.LatLng(value.AddressInfo.Latitude, value.AddressInfo.Longitude)],
-            travelMode: google.maps.TravelMode.DRIVING,
+            travelMode: google.maps.TravelMode.WALKING,
             unitSystem: google.maps.UnitSystem.METRIC,
             durationInTraffic: true,
             avoidHighways: false,
@@ -452,10 +413,10 @@
                 value.distance = (response.rows[0].elements[0].distance != null && response.rows[0].elements[0].distance != '' ? response.rows[0].elements[0].distance.text : '0');
                 value.time = (response.rows[0].elements[0].duration != null && response.rows[0].elements[0].duration != '' ? response.rows[0].elements[0].duration.text : '0');
                 $('#station_list2').append(
-                    '<div class="activity row mb-5" >'+
-                        '<div class="col-sm-3"><span style="font-size:14px; margin-right: 10px;">'+(srNumber++)+' )</span><img src="'+(value.MediaItems != null && value.MediaItems != '' ? value.MediaItems[0].ItemThumbnailURL : 'assets/images/No_Image_Available.jpg')+'" style="border-radius: 10px;border: 3px solid #c7c7c7;width: 70px;height: 60px;"></div>'+
-                        '<div class="col-sm-7 station_list_text_box">'+
-                            '<h5 class="mt-0 mb-0" style="cursor:pointer;" onclick="morezoom('+value.AddressInfo.Latitude+','+value.AddressInfo.Longitude+');"><strong>'+value.AddressInfo.AddressLine1+'</strong></h5>'+
+                    '<div class="activity row" >'+
+                        '<div class="col-sm-2"><img src="'+(value.MediaItems != null && value.MediaItems != '' ? value.MediaItems[0].ItemThumbnailURL : 'assets/images/No_Image_Available.jpg')+'" style="border-radius: 10px;border: 3px solid #c7c7c7;width: 70px;height: 60px;"></div>'+
+                        '<div class="col-sm-8">'+
+                            '<h5 class="mt-0 mb-0" onclick="morezoom('+value.AddressInfo.Latitude+','+value.AddressInfo.Longitude+');"><strong>'+value.AddressInfo.AddressLine1+'</strong></h5>'+
                             '<p class="text-muted font-13 mb-0"><b>@ '+value.distance+' with '+value.time+' of estimated travel time</b></p>'+
                             '<p mb-0 style="height: 27px;overflow: hidden;">'+(value.GeneralComments != null ? value.GeneralComments : '')+'</p>'+
                         '</div>'+
@@ -469,10 +430,9 @@
                                   '<option value="5" selected="">5</option>'+
                               '</select>'+
                           '</div>'+
-                          '<div class="font-10 pb-1" style="">'+
+                          '<div class="font-10" style="">'+
                               '<button class="btn btn-success btn-block">Available</button>'+
                           '</div>'+
-                          '<hr style="background:gray; height:2px;" class="station_devider">'+
                       '</div>'+
                       '<div class="dropdown-divider"></div>'+
                     '</div>');
@@ -495,11 +455,6 @@
   }
 
   function autoComplete(location) {
-      // alert(window.location);
-    if (window.location == "https://enertia.tech/station/add") {
-      initMap2();
-    }
-    // console.log(location.latitude);
     var automap = new google.maps.Map(document.getElementById('searchAddressMap'), {
                     center: {lat: location.latitude, lng: location.longitude},
                     zoom: 13,
@@ -509,13 +464,14 @@
                   });
     geocoder = new google.maps.Geocoder();
     google.maps.event.addListener(automap, 'click', function( event ){
-      // console( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() ); 
-      geocoder.geocode
-      ({
+      // alert( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() ); 
+      geocoder.geocode({
             'latLng': event.latLng
         }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-              if(results[1]) {
+            if (status ==
+              google.maps.GeocoderStatus.OK) {
+              if (results[1]) {
+                // alert(results[1].formatted_address);
                 $("#searchAddress").val(results[1].formatted_address);
                 $('#lat').val(event.latLng.lat());
                 $('#long').val(event.latLng.lng());
@@ -541,7 +497,6 @@
     });
     $('#lat').val(location.latitude);
     $('#long').val(location.longitude);
-    // alert(location.longitude);
 
     autocomplete.addListener('place_changed', function() {
       infowindow.close();
@@ -732,4 +687,4 @@
   }, 2000);
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyA5ROlCVZ-VVNraVOoANwuj-Ucf9NOAMOs&libraries=places&callback=maploadbeforecall" async defer></script>
-<!-- https://maps.googleapis.com/maps/api/js?key=AIzaSyCFHMMm7nRgHGvyqs33H2EXmx92fa6EBWE -->
+

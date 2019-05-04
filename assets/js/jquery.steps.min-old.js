@@ -8,9 +8,10 @@
 $(document).ready(function() {
 	// First slide
 	$('.first-next-btn').click(function() {
-		if($('#station_Name').val() != '' && $('#searchAddress').val() != ''){
+		if($('#station_Name').val() != '' && $('#searchAddress').val() != '' ){
 			$('.first-slide').hide();
 			$('.second-slide').show();
+			// alert($('#station_Name').val());
 		} else{
 			$('#station_Name').css('border-color', 'red');
 			$('#station_Name').attr('placeholder', 'This field is required');
@@ -20,9 +21,10 @@ $(document).ready(function() {
 			$('#station_Name').css('border-color', 'lightgray');
 		});
 
-		if($('#station_Name').val() != '' && $('#searchAddress').val() != ''){
+		if($('#station_Name').val() != '' && $('#searchAddress').val() != '' ){
 			$('.first-slide').hide();
 			$('.second-slide').show();
+			// alert($('#station_Name').val());
 		} else{
 			$('#searchAddress').css('border-color', 'red');
 			$('#searchAddress').attr('placeholder', 'This field is required');
@@ -35,21 +37,10 @@ $(document).ready(function() {
 
 	// Second slide
 	$('.second-next-btn').click(function() {
-		if($('#provider_name').val() != '' && $('#from_day_time').val() != '' && $('#to_day_time').val() != '' && $('#from_time').val() != '' && $('#to_time').val() != '' && $('#price').val() != ''){
-			if($("#from_day_time option:selected").attr('title') <= $("#to_day_time option:selected").attr('title')){
-				if(($("#from_time").val().length == 1 ? $("#from_time").val() : '0'+$("#from_time").val()) <= $("#to_time").val()){
-					$('.second-slide').hide();	
-					$('.third-slide').show();
-				} else{
-					$('#to_time').css('border-color', 'red');
-					$('#to_time').addClass('red-placeholder');
-					$('.to-time-validate').css('display', 'block');
-				}
-			} else{
-				$('#to_day_time').css('border-color', 'red');
-				$('#to_day_time').addClass('red-placeholder');
-				$('.to-day-validate').css('display', 'block');
-			}
+		if($('#provider_name').val() != '' && $('#from_day_time').val() != '' && $('#from_day_time').val() != '' && $('#to_day_time').val() != '' && $('#from_time').val() != '' && $('#to_time').val() != '' ){
+			$('.second-slide').hide();
+			$('.third-slide').show();
+			// alert($('#station_Name').val());
 		} else{
 			$('#provider_name').css('border-color', 'red');
 			$('#provider_name').attr('placeholder', 'This field is required');
@@ -59,21 +50,10 @@ $(document).ready(function() {
 			$('#provider_name').css('border-color', 'lightgray');
 		});
 
-		if($('#provider_name').val() != '' && $('#from_day_time').val() != ''  && $('#to_day_time').val() != '' && $('#from_time').val() != '' && $('#to_time').val() != '' && $('#price').val() != ''){
-			if($("#from_day_time option:selected").attr('title') <= $("#to_day_time option:selected").attr('title')){
-				if(($("#from_time").val().length == 1 ? $("#from_time").val() : 0+$("#from_time").val()) <= $("#to_time").val()){
-					$('.second-slide').hide();	
-					$('.third-slide').show();
-				} else{
-					$('#to_time').css('border-color', 'red');
-					$('#to_time').addClass('red-placeholder');
-					$('.to-time-validate').css('display', 'block');
-				}
-			} else{
-				$('#to_day_time').css('border-color', 'red');
-				$('#to_day_time').addClass('red-placeholder');
-				$('.to-day-validate').css('display', 'block');
-			}
+		if($('#provider_name').val() != '' && $('#from_day_time').val() != ''  && $('#to_day_time').val() != '' && $('#from_time').val() != '' && $('#to_time').val() != '' ){
+			$('.second-slide').hide();
+			$('.third-slide').show();
+			// alert($('#station_Name').val());
 		} else{
 			$('#from_day_time').css('border-color', 'red');
 			$('#from_day_time').attr('placeholder', 'This field is required');
@@ -83,47 +63,23 @@ $(document).ready(function() {
 			$('#from_day_time').css('border-color', 'lightgray');
 		});
 
-		if($('#provider_name').val() != '' && $('#from_day_time').val() != '' && $('#to_day_time').val() != '' && $('#from_time').val() != '' && $('#to_time').val() != '' && $('#price').val() != ''){
-			if($("#from_day_time option:selected").attr('title') <= $("#to_day_time option:selected").attr('title')){
-				if(($("#from_time").val().length == 1 ? $("#from_time").val() : 0+$("#from_time").val()) <= $("#to_time").val()){
-					$('.second-slide').hide();	
-					$('.third-slide').show();
-				} else{
-					$('#to_time').css('border-color', 'red');
-					$('#to_time').addClass('red-placeholder');
-					$('.to-time-validate').css('display', 'block');
-				}
-			} else{
-				$('#to_day_time').css('border-color', 'red');
-				$('#to_day_time').addClass('red-placeholder');
-				$('.to-day-validate').css('display', 'block');
-			}
+		if($('#provider_name').val() != '' && $('#from_day_time').val() != '' && $('#to_day_time').val() != '' && $('#from_time').val() != '' && $('#to_time').val() != '' ){
+			$('.second-slide').hide();
+			$('.third-slide').show();
+			// alert($('#station_Name').val());
 		} else{
 			$('#to_day_time').css('border-color', 'red');
+			$('#to_day_time').attr('placeholder', 'This field is required');
 			$('#to_day_time').addClass('red-placeholder');
 		}
 		$('#to_day_time').change(function() {
 			$('#to_day_time').css('border-color', 'lightgray');
-			$('#to-day-validate').css('display', 'none');
-			// if($("#from_day_time").attr('title') <= $("#to_day_time").attr('title')){
-			// }
 		});
 
-		if($('#provider_name').val() != '' && $('#from_day_time').val() != '' && $('#to_day_time').val() != '' && $('#from_time').val() != '' && $('#to_time').val() != '' && $('#price').val() != ''){
-			if($("#from_day_time option:selected").attr('title') <= $("#to_day_time option:selected").attr('title')){
-				if(($("#from_time").val().length == 1 ? $("#from_time").val() : 0+$("#from_time").val()) <= $("#to_time").val()){
-					$('.second-slide').hide();	
-					$('.third-slide').show();
-				} else{
-					$('#to_time').css('border-color', 'red');
-					$('#to_time').addClass('red-placeholder');
-					$('.to-time-validate').css('display', 'block');
-				}
-			} else{
-				$('#to_day_time').css('border-color', 'red');
-				$('#to_day_time').addClass('red-placeholder');
-				$('.to-day-validate').css('display', 'block');
-			}
+		if($('#provider_name').val() != '' && $('#from_day_time').val() != '' && $('#to_day_time').val() != '' && $('#from_time').val() != '' && $('#to_time').val() != '' ){
+			$('.second-slide').hide();
+			$('.third-slide').show();
+			// alert($('#station_Name').val());
 		} else{
 			$('#from_time').css('border-color', 'red');
 			$('#from_time').attr('placeholder', 'This field is required');
@@ -133,45 +89,10 @@ $(document).ready(function() {
 			$('#from_time').css('border-color', 'lightgray');
 		});
 
-		if($('#provider_name').val() != '' && $('#from_day_time').val() != '' && $('#to_day_time').val() != '' && $('#from_time').val() != '' && $('#to_time').val() != '' && $('#price').val() != ''){
-			if($("#from_day_time option:selected").attr('title') <= $("#to_day_time option:selected").attr('title')){
-				if(($("#from_time").val().length == 1 ? $("#from_time").val() : 0+$("#from_time").val()) <= $("#to_time").val()){
-					$('.second-slide').hide();	
-					$('.third-slide').show();
-				} else{
-					$('#to_time').css('border-color', 'red');
-					$('#to_time').addClass('red-placeholder');
-					$('.to-time-validate').css('display', 'block');
-				}
-			} else{
-				$('#to_day_time').css('border-color', 'red');
-				$('#to_day_time').addClass('red-placeholder');
-				$('.to-day-validate').css('display', 'block');
-			}
-		} else{
-			$('#price').css('border-color', 'red');
-			$('#price').attr('placeholder', 'This field is required');
-			$('#price').addClass('red-placeholder');
-		}
-		$('#price').keypress(function() {
-			$('#price').css('border-color', 'lightgray');
-		});
-
-		if($('#provider_name').val() != '' && $('#from_day_time').val() != '' && $('#to_day_time').val() != '' && $('#from_time').val() != '' && $('#to_time').val() != '' && $('#price').val() != '' ){
-			if($("#from_day_time  option:selected").attr('title') <= $("#to_day_time  option:selected").attr('title')){
-				if(($("#from_time").val().length == 1 ? $("#from_time").val() : 0+$("#from_time").val()) <= $("#to_time").val()){
-					$('.second-slide').hide();	
-					$('.third-slide').show();
-				} else{
-					$('#to_time').css('border-color', 'red');
-					$('#to_time').addClass('red-placeholder');
-					$('.to-time-validate').css('display', 'block');
-				}
-			} else{
-				$('#to_day_time').css('border-color', 'red');
-				$('#to_day_time').addClass('red-placeholder');
-				$('.to-day-validate').css('display', 'block');
-			}
+		if($('#provider_name').val() != '' && $('#from_day_time').val() != '' && $('#to_day_time').val() != '' && $('#from_time').val() != '' && $('#to_time').val() != '' ){
+			$('.second-slide').hide();
+			$('.third-slide').show();
+			// alert($('#station_Name').val());
 		} else{
 			$('#to_time').css('border-color', 'red');
 			$('#to_time').attr('placeholder', 'This field is required');
@@ -191,38 +112,17 @@ $(document).ready(function() {
 		$('.third-slide').hide();
 		$('.second-slide').show();
 	});
-	$(document).on('click', '#third-nxt-btn', function() {
-		if($('#plug_type').val() != 0 && $('#charge_level').val() != 0 && $('#no_of_points').val() != 0){
+	$('.third-next-btn').click(function() {
+		if($('#plug_type').val() != '' ){
 			$('.third-slide').hide();
 			$('.fourth-slide').show();
 		} else{
 			$('#plug_type').css('border-color', 'red');
+			$('#plug_type').attr('placeholder', 'This field is required');
 			$('#plug_type').addClass('red-placeholder');
 		}
 		$('#plug_type').change(function() {
 			$('#plug_type').css('border-color', 'lightgray');
-		});
-
-		if($('#plug_type').val() != 0 && $('#charge_level').val() != 0 && $('#no_of_points').val() != 0){
-			$('.third-slide').hide();
-			$('.fourth-slide').show();
-		} else{
-			$('#charge_level').css('border-color', 'red');
-			$('#charge_level').addClass('red-placeholder');
-		}
-		$('#charge_level').change(function() {
-			$('#charge_level').css('border-color', 'lightgray');
-		});
-
-		if($('#plug_type').val() != 0 && $('#charge_level').val() != 0 && $('#no_of_points').val() != 0){
-			$('.third-slide').hide();
-			$('.fourth-slide').show();
-		} else{
-			$('#no_of_points').css('border-color', 'red');
-			$('#no_of_points').addClass('red-placeholder');
-		}
-		$('#no_of_points').change(function() {
-			$('#no_of_points').css('border-color', 'lightgray');
 		});
 	});
 

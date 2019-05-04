@@ -105,7 +105,7 @@
                                                         <option value="">To</option>
                                                         <?php weekDays(); ?>
                                                       </select>
-                                                      <span class="text-danger to-day-validate" id="to-day-validate">Please fill correct day.</span>
+                                                      <span class="text-danger to-day-validate">Please fill correct day.</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -156,39 +156,33 @@
                                     <div class="col-sm-4 col-md-4 pt-4">
                                         <div class="container">
                                             <div class="form-group row">
-                                                <div class="container">
-                                                    <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pr-0 btn-toggle-lable pl-0 open_24_7">24 / 7 Open
-                                                        <button type="button" class="btn btn-sm btn-toggle focus active float-right" data-toggle="button" aria-pressed="true" autocomplete="off" id="open24">
-                                                            <div class="handle"></div>
-                                                        </button>
-                                                    </label>
-                                                </div>
+                                                <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pr-0">24 / 7 Open
+                                                    <button type="button" class="btn btn-sm btn-toggle focus active" data-toggle="button" aria-pressed="true" autocomplete="off" id="open24">
+                                                        <div class="handle"></div>
+                                                    </button>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
                                    <div class="col-sm-4 col-md-4 pt-4">
                                         <div class="container">
                                             <div class="form-group row">
-                                                <div class="container">
-                                                    <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pr-0 parking-lable btn-toggle-lable" style="padding-left: 30px;">Parking
-                                                        <button type="button" class="btn btn-sm btn-toggle float-right focus active" data-toggle="button" aria-pressed="true" autocomplete="off" id="parking">
-                                                            <div class="handle"></div>
-                                                        </button>
-                                                    </label>
-                                                </div>
+                                                <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pr-0 parking-lable" style="padding-left: 40px;">Parking
+                                                    <button type="button" class="btn btn-sm btn-toggle float-right focus active" data-toggle="button" aria-pressed="true" autocomplete="off" id="parking">
+                                                        <div class="handle"></div>
+                                                    </button>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4 col-md-4 pt-4">
                                         <div class="container">
                                             <div class="form-group row float-right wifi-wraper">
-                                                <div class="container">
-                                                    <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left btn-toggle-lable pr-0">WiFi
-                                                        <button type="button" class="btn btn-sm btn-toggle focus active" data-toggle="button" aria-pressed="true" autocomplete="off" id="wifi">
-                                                            <div class="handle"></div>
-                                                        </button>
-                                                    </label>
-                                                </div>
+                                                <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left">WiFi
+                                                    <button type="button" class="btn btn-sm btn-toggle focus active" data-toggle="button" aria-pressed="true" autocomplete="off" id="wifi">
+                                                        <div class="handle"></div>
+                                                    </button>
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -362,7 +356,7 @@
                                         </div>
                                         <div class="col-xs-4 col-sm-4 col-md-4"></div>
                                         <div class="col-xs-4 col-sm-4 col-md-4">
-                                            <button type="button" class="btn btn-info d-block third-next-btn slides-btn" id="third-nxt-btn">Next</button>
+                                            <button type="button" class="btn btn-info d-block third-next-btn slides-btn">Next</button>
                                         </div>
                                     </div>
                                 </div>
@@ -375,9 +369,9 @@
                                             <div class="wizard-form-heading mb-3">Add Station : Photos and Videos</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 desktop-view">
                                         <div class="container">
-                                            <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pl-0">Add Photos and Videos</label>
+                                            <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pl-0">Add Photos</label>
                                             <div class="gallery-icon-wrapper">
                                                 <div class="btn btn-file btn-gallery">
                                                     <span class="add_image fa fa-file-image-o"></span>
@@ -408,18 +402,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-md-6 mobile-camera">
-                                        <div class="container">
-                                            <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pl-0">Add Photos</label>
-                                            <div class="gallery-icon-wrapper">
-                                                <div class="btn btn-file btn-gallery">
-                                                    <span class="add_image fa fa-file-image-o"></span>
-                                                    <input type="file" name="station_images[]" id="images" multiple="multiple" accept="image/png, image/jpeg">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                    <!-- <div class="col-md-6 mt-4 mobile-camera">
+                                    <div class="col-md-6 mt-4 mobile-camera">
                                         <div class="container">
                                             <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pl-0">Upload</label>
                                             <div class="">
@@ -429,7 +412,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div>
                                     <div class="col-lg-12 mt-4">
                                         <div class="container">
                                             <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pl-0">Files Attached</label>
@@ -463,7 +446,6 @@
     $this->load->view('dashboard/includes/script'); 
 ?>
 <script>
-    
     $(document).ready(function() {
         SetAddFormFields();
         window.setTimeout(function(){
@@ -558,9 +540,6 @@
             // For show image in front
             var url = [];
             $('#images').on('change', function(e) {
-                $('.images-preview').append("<span class='pip' id='preloader'>" +
-                    "<img class='imageThumb' src='<?php echo base_url(); ?>assets/images/preloader.gif'>" +
-                "</span>");
                 e.preventDefault();
                 $.ajax({
                     url: '<?php echo base_url(); ?>station/ImagesUpload',
@@ -577,12 +556,10 @@
                                 return parts[parts.length - 1];
                             }
                             if(getExtension(value) == 'mp4' || getExtension(value) == 'ogg' || getExtension(value) == 'video') {
-                                $('#preloader').remove();
                                 $('.images-preview').append("<span class='pip'>" +
                                 "<img class='imageThumb' src='<?php echo base_url(); ?>assets/images/v1.jpg' title="+key+">" +
                                 "<span class='remove mdi mdi-close'></span></span>"); 
                             } else{
-                                $('#preloader').remove();
                                 $('.images-preview').append("<span class='pip'>" +
                                 "<img class='imageThumb' src="+value+ " title="+key+">" +
                                 "<span class='remove mdi mdi-close'></span></span>");

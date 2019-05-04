@@ -36,10 +36,7 @@
                                         <div class="row align-items-center">
                                             <div class="col-3">
                                                 <a id="staion_edit" href="#" class="btn btn-outline-info station-view-top-r-btn"><i class="fa fa-edit" title="Edit"></i></a>                                                          
-                                            </div>
-                                            <!-- <div class="edit_warning">
-                                                <p class="text-white text-center">This option working only for owner.</p>
-                                            </div> -->
+                                            </div> 
                                             <div class="col-3">
                                                 <button type="button" id="staion_delete" class="btn btn-outline-info station-view-top-r-btn" data-toggle="modal" data-target="#exampleModaltab" id="StationRemove"><i class="fa fa-minus-circle" title="Delete"></i></button>
                                             </div> 
@@ -47,9 +44,6 @@
                                                 <p class="text-white text-center">Are you sure, You want to remove this station?</p>
                                                 <button class="btn btn-default removeStation">Yes</button>
                                                 <button class="btn btn-default remove_no">No</button>
-                                            </div>
-                                            <div class="remove_warning">
-                                                <p class="text-white text-center">This option working only for owner.</p>
                                             </div>
                                             <div class="col-3">
                                                 <a href="#" class="btn btn-outline-info station-view-top-r-btn location-btn" style="padding: 15px 17px;"><i class="fa fa-map-marker" title="Location"></i></a>                                                          
@@ -350,41 +344,30 @@
 
     $(document).ready(function() {
         $('#staion_delete').click(function() {
-            if(stations.station_ID != null && stations.station_ID != undefined){
-                $('.remove_popup').slideDown('slow');
-            } else{
-                $(".remove_warning").slideDown('slow').delay(1000).slideUp('slow');
-            }
+            $('.remove_popup').slideDown('slow');
         });
         $(".remove_no").click(function() {
             $('.remove_popup').slideUp('slow');
         });
 
-        $("#staion_edit").click(function() {
-            if(stations.station_ID != null && stations.station_ID != undefined){
-                // $("#staion_edit").attr("href", "<?php echo base_url(); ?>station/edit/"+stations.station_ID+"");
-                window.location.href = "<?php echo base_url(); ?>station/edit/"+stations.station_ID;
-            } else{
-                $(".remove_warning").slideDown('slow').delay(1000).slideUp('slow');
-            }
-        });
+        $("#staion_edit").attr("href", "<?php echo base_url(); ?>station/edit/"+stations.station_ID+"");
 
         // For remove station
         $(".removeStation").click(function(e) {
-              e.preventDefault();
+          e.preventDefault();
 
-                $.ajax({
-                  url: '<?php echo base_url(); ?>station/RemoveStation/'+stations.station_ID+'',
-                  data: '',
-                  method: 'post',
-                  success: function(response) {
-                    if(response == 1){
-                      window.location.href = '<?php echo base_url(); ?>';
-                    }
-                  }
-                });
+            $.ajax({
+              url: '<?php echo base_url(); ?>station/RemoveStation/'+stations.station_ID+'',
+              data: '',
+              method: 'post',
+              success: function(response) {
+                if(response == 1){
+                  window.location.href = '<?php echo base_url(); ?>';
+                }
+              }
+            });
         });
-        console.log(stations.station_ID);
+
         // For click location button zoom dashboard map
         $(".location-btn").click(function() {
             if(stations.station_lat != null && stations.station_lat != undefined){

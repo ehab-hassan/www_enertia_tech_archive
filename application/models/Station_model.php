@@ -31,7 +31,7 @@ class Station_Model extends CI_Model {
 		$this->db->select('ev_stations.*, `us`.`UserEmail`, `us`.`UserName`, `ev_accesstype`.`access_name`, `ev_payment`.`payment_method`, `ev_provider`.`provider_name`');
 		$this->db->from('ev_stations');
 		$this->db->join('ev_users as us','us.UserID = ev_stations.user_id');
-		
+
 		$this->db->join('ev_accesstype', 'ev_accesstype.accesstype_id = ev_stations.station_accesstype', 'left');
         $this->db->join('ev_payment', 'ev_payment.payment_id = ev_stations.station_payment', 'left');
         $this->db->join('ev_provider', 'ev_provider.provider_id = ev_stations.station_Provider', 'left');
@@ -72,25 +72,30 @@ class Station_Model extends CI_Model {
 	 *
 	 * @access public
 	 */
-	function api()
+	function api($data)
 	{	
 		$this->db->select("ev_stations.*,
-			( 3959 * acos( cos( radians(".$this->input->post('lat').") ) * cos( radians( station_lat ) ) * cos( radians( station_long ) - radians(".$this->input->post('long').") ) + sin( radians(".$this->input->post('lat').") ) * sin( radians( station_lat ) ) ) ) AS distance");                         
+			(3959 * acos(cos(radians(".$this->input->post('lat').")) * cos(radians(station_lat))*cos(radians(station_long ) - radians(".$this->input->post('long').") ) + sin( radians(".$this->input->post('lat').")) * sin( radians(station_lat)))) AS distance");                        
 		$this->db->from('ev_stations');
-        if (!empty($this->input->post('nearest_distance'))) {
-			$this->db->order_by('distance');                    
-        }
+		if($data == 1) {
+	        if (!empty($this->input->post('nearest_distance'))) {
+				$this->db->order_by('distance');                    
+	        }
 
-		if (!empty($this->input->post('plug_type_filtter'))) {
-			$this->db->where_in('ev_stations.station_plugtype', $this->input->post('plug_type_filtter'),FALSE);
+			if (!empty($this->input->post('plug_type_filtter'))) {
+				$this->db->where_in('ev_stations.station_plugtype', $this->input->post('plug_type_filtter'),FALSE);
+			}
+
+			if (!empty($this->input->post('power_filtter'))) {
+				$this->db->where_in('ev_stations.station_power', $this->input->post('power_filtter'),FALSE);
+			}
+			$this->db->where("`ev_stations`.`station_country_code`", $this->input->post('station_contry_code'));
 		}
 
-		if (!empty($this->input->post('power_filtter'))) {
-			$this->db->where_in('ev_stations.station_power', $this->input->post('power_filtter'),FALSE);
-		}
 		$this->db->where("`ev_stations`.`station_status`", '0');
 		$this->db->where("`ev_stations`.`station_deleted`", '1');
 		$this->db->group_by('ev_stations.station_ID','ev_stations.station_plugtype'); 
+		$this->db->having('distance < 500');
 		$this->db->limit(100);
 		return $this->db->get()->result();
 	}
@@ -121,7 +126,7 @@ class Station_Model extends CI_Model {
 		}
 	}
 
-	// // Station view
+	// Station view
 	public function StationRemove($StationId){
 		$this->db->where('station_ID', $StationId);
 		$this->db->delete('ev_stations');
