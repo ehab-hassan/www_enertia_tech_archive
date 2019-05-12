@@ -4,5 +4,5 @@
 /*
 	aws sms api configuration
 */
-$config['aws_access_key']="AKIAIUQNT5UKZ3W6CSEQ";
-$config['aws_secret_key']="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";
+$config['aws_access_key']="AKIAV5MF7IP2ONH77SMC";
+$config['aws_secret_key']="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";

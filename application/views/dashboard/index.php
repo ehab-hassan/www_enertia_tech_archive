@@ -188,7 +188,6 @@
           dataType:'json',                
           success: function(data) {
                 apiJson2 = data;
-                // console.log(data);
                 if(data != null) {
                   Api2marker(data);
                 } 

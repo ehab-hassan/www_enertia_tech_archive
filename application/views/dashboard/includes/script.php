@@ -117,6 +117,7 @@
   window.long;
   apiJson1 = [];
   apiJson2 = [];
+  
   function maploadbeforecall(){
     $.ajax({  
       url:"//jsonip.com",  
@@ -178,9 +179,11 @@
   }
 
   function setcentermap(location) {
+
     if ( $('.searchAddress')[0] ) {
       autoComplete(location);
     }
+        
     var zoomm = 13;
     window.map = new  google.maps.Map(document.getElementById('map'), {
                       center: {lat: location.latitude, lng: location.longitude},
@@ -197,11 +200,11 @@
                       fullscreenControl: true,
                     });
     var marker1 = new google.maps.Marker({
-                    position: new google.maps.LatLng( location.latitude, location.longitude ),
-                    map: window.map,
-                    icon: '<?php echo base_url("/assets/images/user.png"); ?>',
-                    title: 'You',
-                    animation: google.maps.Animation.BOUNCE
+                      position: new google.maps.LatLng( location.latitude, location.longitude ),
+                      map: window.map,
+                      icon: '<?php echo base_url("/assets/images/user.png"); ?>',
+                      title: 'You',
+                      animation: google.maps.Animation.BOUNCE
                   });
     var infowindow = new google.maps.InfoWindow( { content:  'You' } );
         infowindow.close();
@@ -212,6 +215,9 @@
     });
     window.lat = location.latitude;
     window.long = location.longitude;
+    localStorage.setItem('start_lat', window.lat);
+    localStorage.setItem('start_long', window.long);
+    
     // onFilter();
     $.ajax({
       url : '<?php echo base_url(); ?>api/0',
@@ -234,6 +240,7 @@
       dataType:'json',                
       success: function(data) {
         apiJson2 = data;
+        // console.log(window.lat);
         if(data != null) {
           Api2marker(data);
         } 
@@ -276,39 +283,39 @@
     }else{ latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";}
   }
 
-  function initMap2() {
-    var latitudeAndLongitude=document.getElementById("latitudeAndLongitude"),
-    location={ latitude:'', longitude:''};
-    if (navigator.geolocation){
-      var options = {};
-      navigator.geolocation.getCurrentPosition(
-      function success(position) {
-        location.latitude=position.coords.latitude;
-        location.longitude=position.coords.longitude;
-        setcentermap(location);
-      },
-      function error(error_message) {
-        $.ajax({  
-          url:"//jsonip.com",  
-          method:"get",  
-          dataType: 'jsonp',
-          crossDomain: true,
-          success:function(res){ 
-            $.ajax({
-              url: '<?php echo base_url("getlatlong/"); ?>'+res.ip,
-              type: 'get',
-              dataType: 'json',
-              success: function(data) {
-                location.latitude=data.geoplugin_latitude;
-                location.longitude=data.geoplugin_longitude;
-                setcentermap(location);
-              }
-            });
-          }
-        });
-      },options);
-    }else{ latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";}
-  }
+  // function initMap2() {
+  //   var latitudeAndLongitude=document.getElementById("latitudeAndLongitude"),
+  //   location={ latitude:'', longitude:''};
+  //   if (navigator.geolocation){
+  //     var options = {};
+  //     navigator.geolocation.getCurrentPosition(
+  //     function success(position) {
+  //       location.latitude=position.coords.latitude;
+  //       location.longitude=position.coords.longitude;
+  //       setcentermap(location);
+  //     },
+  //     function error(error_message) {
+  //       $.ajax({  
+  //         url:"//jsonip.com",  
+  //         method:"get",  
+  //         dataType: 'jsonp',
+  //         crossDomain: true,
+  //         success:function(res){ 
+  //           $.ajax({
+  //             url: '<?php echo base_url("getlatlong/"); ?>'+res.ip,
+  //             type: 'get',
+  //             dataType: 'json',
+  //             success: function(data) {
+  //               location.latitude=data.geoplugin_latitude;
+  //               location.longitude=data.geoplugin_longitude;
+  //               setcentermap(location);
+  //             }
+  //           });
+  //         }
+  //       });
+  //     },options);
+  //   }else{ latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser.";}
+  // }
 
   function geocodeLatLng(geocoder, map, infowindow) {
     var input = document.getElementById('latlng').value;
@@ -355,7 +362,7 @@
                 title: value.station_Address
               });
       openinfimodal(marker, value);
-     
+      
       var distanceService = new google.maps.DistanceMatrixService();
           distanceService.getDistanceMatrix({
             origins: [new google.maps.LatLng(window.lat, window.long)],
@@ -371,7 +378,6 @@
           if(status !== google.maps.DistanceMatrixStatus.OK) {
             console.log('Error:', status);
           } else {
-              // console.log(response.rows[0]);
               $("#distance").text(response.rows[0].elements[0].distance.text).show();
               $("#duration").text(response.rows[0].elements[0].duration.text).show();
               value.author = 'website';
@@ -380,14 +386,13 @@
               value.distance = response.rows[0].elements[0].distance.text;
               value.time = response.rows[0].elements[0].duration.text;
               var obj = JSON.parse(value.station_attachment);
-              // console.log(obj);
               $('#station_list1').append(
                     '<div class="activity row station_list_stations" >'+
                         '<div class="col-sm-3"><span style="font-size:14px; margin-right: 10px;">'+(srNumber++)+' )</span><img src="'+(obj != null && obj != '' ? obj[0].url : 'assets/images/No_Image_Available.jpg')+'" style="border-radius: 10px;border: 3px solid #c7c7c7;width: 70px;height: 60px;"></div>'+
                         '<div class="col-sm-7 station_list_text_box">'+
                             '<h5 class="mt-0 mb-0" style="cursor:pointer;" onclick="morezoom('+value.station_lat+','+value.station_long+');"><strong>'+value.station_Address+'</strong></h5>'+
                             '<p class="text-muted font-13 mb-0"><b>@ '+value.distance+' with '+value.time+' of estimated travel time</b></p>'+
-                            '<p mb-0 style="height: 27px;overflow: hidden;">'+value.station_general_comment+'</p>'+
+                            '<p mb-0 style="height: 26px;overflow: hidden;">'+value.station_general_comment+'</p>'+
                         '</div>'+
                         '<div class="col-sm-2 text-center">'+
                           '<div class="">'+
@@ -418,7 +423,6 @@
   function Api2marker(data) {
     $('#station_list2').empty('');
     var datalen = data.length;
-    // var srNumber = 1;
     var station_2_count = window.station_count + datalen;
     $('#station_count').text(station_2_count);
     var markeicon = "<?php echo base_url('./assets/images/marke.png'); ?>";
@@ -457,7 +461,7 @@
                         '<div class="col-sm-7 station_list_text_box">'+
                             '<h5 class="mt-0 mb-0" style="cursor:pointer;" onclick="morezoom('+value.AddressInfo.Latitude+','+value.AddressInfo.Longitude+');"><strong>'+value.AddressInfo.AddressLine1+'</strong></h5>'+
                             '<p class="text-muted font-13 mb-0"><b>@ '+value.distance+' with '+value.time+' of estimated travel time</b></p>'+
-                            '<p mb-0 style="height: 27px;overflow: hidden;">'+(value.GeneralComments != null ? value.GeneralComments : '')+'</p>'+
+                            '<p mb-0 style="height: 26px;overflow: hidden;">'+(value.GeneralComments != null ? value.GeneralComments : '')+'</p>'+
                         '</div>'+
                         '<div class="col-sm-2 text-center">'+
                           '<div class="">'+
@@ -495,11 +499,7 @@
   }
 
   function autoComplete(location) {
-      // alert(window.location);
-    if (window.location == "https://enertia.tech/station/add") {
-      initMap2();
-    }
-    // console.log(location.latitude);
+    
     var automap = new google.maps.Map(document.getElementById('searchAddressMap'), {
                     center: {lat: location.latitude, lng: location.longitude},
                     zoom: 13,
@@ -510,8 +510,7 @@
     geocoder = new google.maps.Geocoder();
     google.maps.event.addListener(automap, 'click', function( event ){
       // console( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng() ); 
-      geocoder.geocode
-      ({
+      geocoder.geocode ({
             'latLng': event.latLng
         }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
@@ -528,6 +527,21 @@
         });
     });
 
+    // Fill current address in address field automatic.
+    // setTimeout(function() {
+    //   var lat = parseFloat(document.getElementById("lat").value);
+    //   var lng = parseFloat(document.getElementById("long").value);
+    //   var latlng = new google.maps.LatLng(lat, lng);
+    //   var geocoder = geocoder = new google.maps.Geocoder();
+    //   geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+    //       if (status == google.maps.GeocoderStatus.OK) {
+    //           if (results[1]) {
+    //               $(".autoAddress").val(results[1].formatted_address);
+    //           }
+    //       }
+    //   });
+    // }, 1000);
+
     var input = document.getElementById('searchAddress');
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', automap);
@@ -541,7 +555,6 @@
     });
     $('#lat').val(location.latitude);
     $('#long').val(location.longitude);
-    // alert(location.longitude);
 
     autocomplete.addListener('place_changed', function() {
       infowindow.close();
@@ -567,7 +580,6 @@
           (place.address_components[2] && place.address_components[2].short_name || '')
         ].join('');
       }
-      // console.log(place.address_components.length);
       var addressLength = place.address_components.length;
       if(addressLength <= 5){
         $("#countryCode").val(place.address_components[addressLength-1].short_name);
@@ -585,6 +597,7 @@
       location.latitude   = place.geometry.location.lat();
       location.longitude  = place.geometry.location.lng();
       setcentermap(location);
+
       infowindow.open(automap, marker);
     });
   }
@@ -595,7 +608,15 @@
     var directionsService = new google.maps.DirectionsService();
     directionDisplay = new google.maps.DirectionsRenderer();
     directionDisplay.setMap(window.map);
-    var start = window.lat+','+ window.long;
+
+    if(localStorage.getItem("opencharge") == 'true') {
+      localStorage.setItem("opencharge", false);
+      console.log(localStorage.getItem("start_latitude"));
+      console.log(localStorage.getItem("start_longitude"));
+      var start = localStorage.getItem("start_latitude")+','+ localStorage.getItem("start_longitude");
+    } else{
+      var start = window.lat+','+ window.long;
+    }
     var end = station_lat+', '+station_long;
     var request = {
       origin:start, 

@@ -877,150 +877,6 @@
         });
     } 
 
-    // function initMap() {
-    //     $(".ajax_loder").show();
-    //     $(".ajax_loder .status").show();
-    //     var latitudeAndLongitude=document.getElementById("latitudeAndLongitude"),
-    //     location={ latitude:'', longitude:''};
-    //     if (navigator.geolocation){
-    //         var options = {};
-    //         navigator.geolocation.getCurrentPosition(
-    //         function success(position) {
-    //             location_check = true;
-    //             console.log(position);
-    //             showPosition(position);
-    //         },
-    //         function error(error_message) {
-    //             location_check = false;
-    //             $.ajax({  
-    //                  url:"//jsonip.com",  
-    //                  method:"get",  
-    //                  dataType: 'jsonp',
-    //                  crossDomain: true,
-    //                  success:function(res){ 
-    //                     console.log(res);
-    //                     $.ajax({
-    //                         url: 'getlatlong/'+res.ip,
-    //                         type: 'get',
-    //                         dataType: 'json',
-    //                         success: function(data) {
-    //                             console.log(data);
-    //                             location.latitude=data.geoplugin_latitude;
-    //                             location.longitude=data.geoplugin_longitude;
-    //                             $.ajax({
-    //                                 url : 'https://api.openchargemap.io/v2/poi/?output=json&latitude='+location.latitude+'&longitude='+location.longitude,
-    //                                 method : 'get',
-    //                                 dataType: 'json',
-    //                                 contentType: "application/json",                 
-    //                                 success: function(data) {
-    //                                     pointmap(data,location);
-    //                                 }
-    //                             });
-    //                         }
-    //                     });
-    //                  }  
-    //             });  
-    //         },options);
-    //     }else{ latitudeAndLongitude.innerHTML="Geolocation is not supported by this browser."; }
-    // }
-
-    // function maploadbeforecall(){
-    //     $.ajax({  
-    //          url:"//jsonip.com",  
-    //          method:"get",  
-    //          dataType: 'jsonp',
-    //          crossDomain: true,
-    //          success:function(res){ 
-    //              $.ajax({
-    //                 url: 'getlatlong/'+res.ip,
-    //                 type: 'get',
-    //                 dataType: 'json',
-    //                 success: function(data) {
-    //                     location.latitude=data.geoplugin_latitude;
-    //                     location.longitude=data.geoplugin_longitude;
-    //                     pointmap('',location);
-    //                     initMap();
-    //                 }
-    //             });
-    //           }
-    //     });
-    // }
-
-    // function pointmap(jsondata,location) {
-    //     var zoomm = 13;
-    //     if (location_check==false) {
-    //         zoomm = 11;
-    //     }
-    //     var map = new google.maps.Map(document.getElementById('map'), {
-    //                   center: {lat: location.latitude, lng: location.longitude},
-    //                   zoom: zoomm,
-    //                   scrollwheel: false,
-    //                   mapTypeId: 'roadmap',
-    //                   gestureHandling: 'greedy',
-    //                   mapTypeId: google.maps.MapTypeId.ROADMAP,
-    //     });
-
-    //     var marker1 = new google.maps.Marker({
-    //         position: new google.maps.LatLng(location.latitude, location.longitude),
-    //         map: map,
-    //         icon: '<?php echo base_url("/assets/images/user.png"); ?>',
-    //         title: 'You',
-    //         animation: google.maps.Animation.BOUNCE
-    //     });
-
-    //     var infowindow = new google.maps.InfoWindow({
-    //         content:  'You'
-    //     });
-
-    //     infowindow.open(marker1.get('map'), marker1);
-    //     /*icon marke*/
-    //     var markeicon = "<?php echo base_url('./assets/images/marke.png'); ?>";
-    //     /*check lengh*/
-    //     if(jsondata.length > 0){
-    //         for (i = 0; i < jsondata.length; i++) {
-    //             /*set marker*/
-    //             marker =  new google.maps.Marker({      
-    //                           position: new google.maps.LatLng(jsondata[i].AddressInfo.Latitude, jsondata[i].AddressInfo.Longitude),
-    //                           map: map,
-    //                           icon: markeicon,
-    //                           animation: google.maps.Animation.DROP,
-    //                           title: jsondata[i].AddressInfo.Title
-    //                       });
-    //             openinfimodal(marker, jsondata[i]);
-    //         }
-    //     }
-    //     $(".ajax_loder").hide();
-    //     $(".ajax_loder .status").hide();
-    // }
-
-    // /*open popup click on mark */
-
-    // function openinfimodal(marker, jsondatasingal) {
-    //     marker.addListener('click', function() {
-    //         $('#mappopuinfohtml').html('<div class="mb-4">'+
-    //                         '<h5 class="grrn-text">Provider</h5>'+
-    //                         '<p class="DataProvider m-0">'+ (jsondatasingal.OperatorInfo ? jsondatasingal.OperatorInfo.Title : '' )+' - '+ (jsondatasingal.StatusType ? jsondatasingal.StatusType.Title : jsondatasingal.StatusType) +'</p>'+
-    //                         '<p class="m-0">Verified = '+((jsondatasingal.IsRecentlyVerified == false) ? "No" : "Yes")+', Last Verified = '+((jsondatasingal.DateLastVerified == null) ? 'Not Available': jsondatasingal.DateLastVerified)+'</p>'+
-    //                     '</div>'+
-    //                     '<div class="mb-4">'+
-    //                         '<h5 class="grrn-text">Addres</h5>'+
-    //                         '<p class="m-0">'+jsondatasingal.AddressInfo.AddressLine1+', '+jsondatasingal.AddressInfo.Title+'</p>'+
-    //                         '<p class="m-0">Longitude '+jsondatasingal.AddressInfo.Longitude+', Latitude '+jsondatasingal.AddressInfo.Latitude+'</p>'+
-    //                     '</div>'+
-    //                     '<div class="mb-4">'+
-    //                         '<h5 class="grrn-text">Usage</h5>'+
-    //                         '<p class="m-0">Membership Required = '+ ( jsondatasingal.UsageType ? jsondatasingal.UsageType.Title : 'Null' )+'</p>'+
-    //                     '</div>'+
-    //                     '<div class="mb-4">'+
-    //                         '<h5 class="grrn-text">Plug Type and Capacity</h5>'+
-    //                         '<p class="m-0">Power = '+ ( jsondatasingal.Connections ? jsondatasingal.Connections[0].PowerKW : '' )+'</p>'+
-    //                         '<p class="m-0">Chargin Point = '+jsondatasingal.NumberOfPoints+', '+((jsondatasingal.GeneralComments == null) ? 'Not Available' : jsondatasingal.GeneralComments)+'</p>'+
-    //                     '</div>'+
-    //                     "<a href='<?php echo base_url("/login"); ?>' class='btn btn-block  btn-outline-primary' >Need more information? Let's Log In</a>");
-    //         $('#exampleModalform').modal('show');
-    //     });
-    // }
-
     window.map;
   window.lat;
   window.long;
@@ -1202,10 +1058,10 @@
 
   // For api 2
   function Api2marker(data) {
-    $('#station_list2').empty('');
-    var datalen = data.length;
-    station_2_count = window.station_count + datalen;
-    $('#station_count').text(station_2_count);
+    // $('#station_list2').empty('');
+    // var datalen = data.length;
+    // station_2_count = window.station_count + datalen;
+    // $('#station_count').text(station_2_count);
     var markeicon = "<?php echo base_url('./assets/images/marke.png'); ?>";
 
     $.each(data, function (index, value) {
@@ -1245,8 +1101,13 @@
   /*open popup click on mark */
   function openinfimodal(marker, jsondatasingal) {
     marker.addListener('click', function() {
-        sessionStorage.setItem("clickmarkedata", JSON.stringify(jsondatasingal));
-        window.location.href = "<?php echo base_url(); ?>station";
+        if("<?php echo $this->session->userdata('UserID'); ?>" != null &&  "<?php echo $this->session->userdata('UserID'); ?>" != '') {
+            sessionStorage.setItem("clickmarkedata", JSON.stringify(jsondatasingal));
+            window.location.href = "<?php echo base_url(); ?>station";
+        } else{
+            alert('Please login first.');
+            $("#login_phone").focus();
+        }
     });
   }
 
