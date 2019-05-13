@@ -72,7 +72,6 @@
     <div class="col-lg-9 col-md-8 p-0 d-flex h-100vh justify-content-center" id="map">
     </div>
 </div>
-
 <script type="text/javascript">
     function onFilter() {
         var form = $('#filtter_form');
@@ -91,19 +90,19 @@
              }
         });
         $.ajax({  
-          // url: "https://api.openchargemap.io/v2/poi/?output=json&latitude=654356&longitude=765765",
-          url:"https://api.openchargemap.io/v2/poi/?output=json&latitude="+window.lat+"&longitude="+window.long+"",  
-          method:"get",  
-          data:form.serialize(),  
-          dataType:'json',
-          success: function( data ) {
-            if (data != null) {
-              Api2marker(data);                    
-            }
-          },
-          error: function() {
+             url:"<?php echo base_url(); ?>api2",  
+             method:"post",  
+             data:form.serialize(),  
+             dataType:'json',
+             success: function( data ) {
+                // console.log(data);
+                if (data.status == "true") {
+                    Api2marker(data.data);                    
+                }
+             },
+             error: function( ) {
 
-          }
+             }
         });
     }
     function clearfiltter() {

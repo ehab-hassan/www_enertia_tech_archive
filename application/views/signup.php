@@ -341,21 +341,21 @@
                 console.log(data);
              }
         });
-        $.ajax({  
-          // url: "https://api.openchargemap.io/v2/poi/?output=json&latitude=654356&longitude=765765",
-          url:"https://api.openchargemap.io/v2/poi/?output=json&latitude="+window.lat+"&longitude="+window.long+"",  
-          method:"get",  
-          data:form.serialize(),  
-          dataType:'json',
-          success: function( data ) {
-            if (data != null) {
-              Api2marker(data);                    
-            }
-          },
-          error: function( ) {
+        // $.ajax({  
+        //      url:"<?php echo base_url(); ?>api2",  
+        //      method:"post",  
+        //      data:form.serialize(),  
+        //      dataType:'json',
+        //      success: function( data ) {
+        //         // console.log(data);
+        //         if (data.status == "true") {
+        //             Api2marker(data.data);                    
+        //         }
+        //      },
+        //      error: function( ) {
 
-          }
-        });
+        //      }
+        // });
     }
     function clearfiltter() {
         $("#nearestby").attr("checked", true);
