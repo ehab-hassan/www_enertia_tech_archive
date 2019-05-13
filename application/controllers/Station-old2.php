@@ -208,12 +208,11 @@
       $station_images = $this->input->post('station_Photos');
       $lat = $this->input->post('station_Location_lat');
       $long = $this->input->post('station_Location_long');
-      $userId = $this->input->post('userId');
       $country_code = $this->input->post('station_Country_Code');
       $images = array();
       
         $data = array(
-          'user_id' => $userId,
+          'user_id' => '',
           'station_Name' => $station_name,
           'station_Address' => $station_address,
           'station_lat' => $lat,

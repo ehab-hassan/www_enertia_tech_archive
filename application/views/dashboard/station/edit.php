@@ -275,7 +275,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="container">
-                                                <label for="txtCompanyShipping" class="col-lg-12 col-form-label text-left pl-0">Chargin Level - Power (KW)</label>
+                                                <label for="txtCompanyShipping" class="col-lg-12 col-form-label text-left pl-0">Charging Level - Power (KW)</label>
                                                 <div class="form-group row">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">

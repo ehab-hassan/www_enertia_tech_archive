@@ -29,11 +29,10 @@
                                     <div class="col-md-12 mb-3">
                                         <div class="container">
                                             <label for="searchAddress">Enter Station Address</label>
-                                            <input type="text" class="form-control searchAddress autoAddress" name="station_Address" id="searchAddress" required="required">                                            
+                                            <input type="text" class="form-control searchAddress" name="station_Address" id="searchAddress" required="required">                                            
                                             <input type="hidden" id="lat" name="station_Location_lat">
                                             <input type="hidden" id="long" name="station_Location_long">
                                             <input type="hidden" id="countryCode" name="station_Country_Code">
-                                            <input type="hidden" id="userId" name="userId" value="<?php echo $this->session->userdata('UserID'); ?>">
                                         </div>
                                     </div>    
                                     <div class="col-md-12 mb-3">
@@ -274,7 +273,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="container">
-                                                <label for="txtCompanyShipping" class="col-lg-12 col-form-label text-left pl-0">Charging Level - Power (KW)</label>
+                                                <label for="txtCompanyShipping" class="col-lg-12 col-form-label text-left pl-0">Chargin Level - Power (KW)</label>
                                                 <div class="form-group row">
                                                     <div class="col-lg-12">
                                                         <div class="form-group">
@@ -409,7 +408,28 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <!-- <div class="col-md-6 mobile-camera">
+                                        <div class="container">
+                                            <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pl-0">Add Photos</label>
+                                            <div class="gallery-icon-wrapper">
+                                                <div class="btn btn-file btn-gallery">
+                                                    <span class="add_image fa fa-file-image-o"></span>
+                                                    <input type="file" name="station_images[]" id="images" multiple="multiple" accept="image/png, image/jpeg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="col-md-6 mt-4 mobile-camera">
+                                        <div class="container">
+                                            <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pl-0">Upload</label>
+                                            <div class="">
+                                                <div class="btn btn-file pl-0" style="background: transparent !important;">
+                                                    <span class="fa fa-cloud-upload station-view-bottom-r-btn"></span>
+                                                    <input type="file" name="station_images2[]" id="images2" multiple="multiple" accept="image/png, image/jpeg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
                                     <div class="col-lg-12 mt-4">
                                         <div class="container">
                                             <label for="txtEmailAddressShipping" class="col-lg-12 col-form-label text-left pl-0">Files Attached</label>
@@ -446,8 +466,6 @@
     
     $(document).ready(function() {
         SetAddFormFields();
-        // initMap();
-
         window.setTimeout(function(){
             // Add plug section click on plug icon
             $('.add_plug').click(function() {
@@ -613,9 +631,6 @@
                         // console.log(response);
                         if(response == 1) {
                             $('.success-msg').slideDown().delay(2000).slideUp();
-                            setTimeout(function() {
-                                window.location.href = "<?php echo base_url(); ?>";
-                            }, 1000);
                         }
                         if(response == 2) {
                             $('.success-msg').text('Station updated successfully');
@@ -636,3 +651,4 @@
         } ,1000);
     });
 </script>
+
