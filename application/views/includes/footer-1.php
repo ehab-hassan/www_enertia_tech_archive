@@ -1,4 +1,4 @@
-<div class="modal fade" id="exampleModalform" tabindex="-1" role="dialog" style="display: none; " aria-hidden="true">
+﻿<div class="modal fade" id="exampleModalform" tabindex="-1" role="dialog" style="display: none; " aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -1084,9 +1084,47 @@
         });
   }
 
+  // function setcentermap(location) {
+  //   if ( $('.searchAddress')[0] ) {
+  //     autoComplete(location)
+  //   }
+  //   var zoomm = 13;
+  //   window.map = new  google.maps.Map(document.getElementById('map'), {
+  //                     center: {lat: location.latitude, lng: location.longitude},
+  //                     zoom: zoomm,
+  //                     scrollwheel: true,
+  //                     mapTypeId: google.maps.MapTypeId.ROADMAP,
+  //                     mapTypeControl: true,
+  //                     mapTypeControlOptions: {
+  //                         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+  //                         position: google.maps.ControlPosition.TOP_RIGHT,
+  //                     },
+  //                     scaleControl: true,
+  //                     streetViewControl: true,
+  //                     fullscreenControl: true,
+  //                   });
+  //   var marker1 = new google.maps.Marker({
+  //                   position: new google.maps.LatLng( location.latitude, location.longitude ),
+  //                   map: window.map,
+  //                   icon: '<?php echo base_url("/assets/images/user.png"); ?>',
+  //                   title: 'You',
+  //                   animation: google.maps.Animation.BOUNCE
+  //                 });
+  //   var infowindow = new google.maps.InfoWindow( { content:  'You' } );
+  //       infowindow.close();
+  //       infowindow.open( marker1.get('map'), marker1 );
+  //   window.map.setCenter({
+  //       lat : location.latitude,
+  //       lng : location.longitude
+  //   });
+  //   window.lat = location.latitude;
+  //   window.long = location.longitude;
+  //   onFilter();
+  // }
+
   function setcentermap(location) {
     if ( $('.searchAddress')[0] ) {
-      autoComplete(location)
+      autoComplete(location);
     }
     var zoomm = 13;
     window.map = new  google.maps.Map(document.getElementById('map'), {
@@ -1096,8 +1134,8 @@
                       mapTypeId: google.maps.MapTypeId.ROADMAP,
                       mapTypeControl: true,
                       mapTypeControlOptions: {
-                          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                          position: google.maps.ControlPosition.TOP_RIGHT,
+                        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                        position: google.maps.ControlPosition.TOP_RIGHT,
                       },
                       scaleControl: true,
                       streetViewControl: true,
@@ -1119,7 +1157,34 @@
     });
     window.lat = location.latitude;
     window.long = location.longitude;
-    onFilter();
+    // onFilter();
+    $.ajax({
+      url : '<?php echo base_url(); ?>api/0',
+      method : 'POST',
+      data: $('#filtter_form').serialize(),
+      dataType:'json',                 
+      success: function(data) {
+        // console.log(data);
+        if (data.status == "true") {
+          Apimarker(data.data);
+        }
+      },
+      error: function(data){}
+    });
+
+    $.ajax({
+      // url: "https://api.openchargemap.io/v2/poi/?output=json&latitude=654356&longitude=765765",
+      url : "https://api.openchargemap.io/v2/poi/?output=json&latitude="+window.lat+"&longitude="+window.long+"",
+      method : 'get',
+      dataType:'json',                
+      success: function(data) {
+        apiJson2 = data;
+        if(data != null) {
+          Api2marker(data);
+        } 
+      },
+      error: function(data){}
+    });
   }
 
   function initMap() {
@@ -1202,10 +1267,10 @@
 
   // For api 2
   function Api2marker(data) {
-    // $('#station_list2').empty('');
-    // var datalen = data.length;
-    // station_2_count = window.station_count + datalen;
-    // $('#station_count').text(station_2_count);
+    $('#station_list2').empty('');
+    var datalen = data.length;
+    station_2_count = window.station_count + datalen;
+    $('#station_count').text(station_2_count);
     var markeicon = "<?php echo base_url('./assets/images/marke.png'); ?>";
 
     $.each(data, function (index, value) {
@@ -1245,14 +1310,8 @@
   /*open popup click on mark */
   function openinfimodal(marker, jsondatasingal) {
     marker.addListener('click', function() {
-        // alert("<?php //echo $this->session->userdata('UserID'); ?>");
-        if("<?php echo $this->session->userdata('UserID'); ?>" != null &&  "<?php echo $this->session->userdata('UserID'); ?>" != '') {
-            sessionStorage.setItem("clickmarkedata", JSON.stringify(jsondatasingal));
-            window.location.href = "<?php echo base_url(); ?>station";
-        } else{
-            alert('Please login first.');
-            $("#login_phone").focus();
-        }
+        sessionStorage.setItem("clickmarkedata", JSON.stringify(jsondatasingal));
+        window.location.href = "<?php echo base_url(); ?>station";
     });
   }
 
