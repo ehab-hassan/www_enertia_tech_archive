@@ -9,13 +9,13 @@
                             <button class="btn btn-info btn-lg d-block station-view-back-btn">
                                 <a href="<?php echo base_url(); ?>" class="text-white d-block">BACK</a>
                             </button>
+                            <!-- <h5 class="mt-2">Crescent Road, Jumeirah Zabeel Saray</h5> -->
                             <h5 class="mt-2" id="staion_name"></h5>
                             <div id="carouselExample1" class="carousel slide z-depth-1-half" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item itemimage h-400">
                                       <img class="d-block h-400 sliderimage" src="<?php echo  base_url('assets/images/No_Image_Available.jpg'); ?>" alt="First slide">
                                     </div>
-                                    
                                   </div>
                                 <a class="carousel-control-prev" href="#carouselExample1" role="button" data-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -36,7 +36,9 @@
                                             <div class="col-3">
                                                 <a id="staion_edit" href="#" class="btn btn-outline-info station-view-top-r-btn"><i class="fa fa-edit" title="Edit"></i></a>                                                          
                                             </div>
-
+                                            <!-- <div class="edit_warning">
+                                                <p class="text-white text-center">This option working only for owner.</p>
+                                            </div> -->
                                             <div class="col-3">
                                                 <button type="button" id="staion_delete" class="btn btn-outline-info station-view-top-r-btn" data-toggle="modal" data-target="#exampleModaltab" id="StationRemove"><i class="fa fa-minus-circle" title="Delete"></i></button>
                                             </div> 
@@ -49,7 +51,7 @@
                                                 <p class="text-white text-center">This option working only for owner.</p>
                                             </div>
                                             <div class="col-3">
-                                                <a href="#" class="btn btn-outline-info station-view-top-r-btn location-btn morezoom" style="padding: 15px 17px;"><i class="fa fa-map-marker" title="Location"></i></a>                                                          
+                                                <a href="#" class="btn btn-outline-info station-view-top-r-btn location-btn" style="padding: 15px 17px;"><i class="fa fa-map-marker" title="Location"></i></a>                                                          
                                             </div> 
                                             <div class="col-3">
                                                 <button type="button" class="btn btn-outline-info station-view-top-r-btn" data-toggle="modal" data-target="#exampleModaltab"><i class="fa fa-sign-in"></i></button>
@@ -126,7 +128,12 @@
                                                     <i class="fa fa-star text-warning"></i>
                                                     <span class="text-info"> ( 13 )</span>
                                                 </p>
-                                            </div>                                
+                                            </div>
+                                            <!-- <div class="col-12">
+                                                <div class="progress mt-4" style="height:6px;">
+                                                    <div class="progress-bar progress-animated bg-pink" role="progressbar" style="max-width: 85%; border-radius:5px;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>  -->                                 
                                         </div>                                                    
                                     </div>
                                 </div>
@@ -275,8 +282,13 @@
                 $('.carousel-item').first().addClass('active');
                 $('#carouselExample1').carousel();
             }
-            console.log(stations);
-            $('#station_destant').text('@ '+stations.distance+',  '+stations.time);
+
+            if(stations.distance != undefined && stations.time != undefined) {
+                $('#station_destant').text('@ '+stations.distance+',  '+stations.time);
+            } else{
+                $('#station_destant').text('Distance and time not availabe.');
+            }
+
             $('#allday').text(stations.station_open_time==0 ? '24 / 7, All days of the Week' : '');
             $('#weekday').text(stations.station_from_time+' AM - '+stations.station_to_time+' PM, '+stations.station_from_day+' - '+stations.station_to_day);
             $.ajax({  
@@ -314,16 +326,11 @@
                 $('.carousel-item').first().addClass('active');
                 $('#carouselExample1').carousel();
             }
-            // $('#station_destant').text('@ '+stations.distance+',  '+stations.time);
-            if(stations.distance != undefined && stations.time != undefined) {
-                $('#station_destant').text('@ '+stations.distance+',  '+stations.time);
-            } else{
-                $('#station_destant').text('Distance and time not availabe.');
-            }
-            $('#ConnectorsPlugPower').text(stations.Connections != null ? stations.NumberOfPoints+', '+ (stations.Connections[0].Level != null ? stations.Connections[0].Level.Title : '')+', '+stations.Connections[0].PowerKW+'KW' : '');
+            $('#station_destant').text('@ '+stations.distance+',  '+stations.time);
+            $('#ConnectorsPlugPower').text(stations.Connections != null ? stations.NumberOfPoints+', '+ stations.Connections[0].Level.Title+', '+stations.Connections[0].PowerKW+'KW' : '');
             $('#MembershipPayment').text(stations.UsageType != null ? stations.UsageType.Title : '');
-            $('#PlugTypePlugType1').text((stations.Connections != null ? stations.NumberOfPoints+' Connectors,'+stations.Connections[0].ConnectionType.Title+' '+(stations.Connections[0].CurrentType != null ? stations.Connections[0].CurrentType.Title : '') : ''));
-            $('#PlugTypePlugTyp2').text((stations.Connections != null ? (stations.Connections[0].Level != null ? stations.Connections[0].Level.Title : '') : ''));
+            $('#PlugTypePlugType1').text((stations.Connections != null ? stations.NumberOfPoints+' Connectors,'+stations.Connections[0].ConnectionType.Title+' '+stations.Connections[0].CurrentType.Title : ''));
+            $('#PlugTypePlugTyp2').text((stations.Connections != null ? stations.Connections[0].Level.Title : ''));
             $('#ProviderTitle').text(stations.OperatorInfo != null ? stations.OperatorInfo.Title : '');
             $('#ProviderUrl').text(stations.OperatorInfo != null ? stations.OperatorInfo.WebsiteURL : '');
             $('#allday').text("Not Available, Please call Contact Number");
@@ -352,7 +359,7 @@
         $('.carousel-item').first().addClass('active');
         $('#carouselExample1').carousel();
     }
-    console.log(stations);
+
     $(document).ready(function() {
         $('#staion_delete').click(function() {
             if(stations.station_ID != null && stations.station_ID != undefined){
@@ -389,6 +396,7 @@
                   }
                 });
         });
+        // console.log(stations.station_ID);
         // For click location button zoom dashboard map
         $(".location-btn").click(function() {
             if(stations.station_lat != null && stations.station_lat != undefined){
@@ -397,11 +405,7 @@
                 localStorage.setItem("long", stations.station_long);
                 window.location = '<?php echo base_url(); ?>';
             } else{
-                localStorage.setItem('start_latitude',(localStorage.getItem('start_lat')));
-                localStorage.setItem('start_longitude',(localStorage.getItem('start_long')));
-
                 localStorage.setItem("reloading", true);
-                localStorage.setItem("opencharge", true);
                 localStorage.setItem("lat", stations.AddressInfo.Latitude);
                 localStorage.setItem("long", stations.AddressInfo.Longitude);
                 window.location = '<?php echo base_url(); ?>';

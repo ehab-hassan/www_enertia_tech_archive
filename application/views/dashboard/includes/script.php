@@ -168,6 +168,15 @@
       animation: google.maps.Animation.BOUNCE
     });
 
+    // For legend
+    // var legend = document.createElement('div');
+    // legend.id = 'legend';
+    // var content = [];
+    // content.push('<h5>Starting Point</h5>');
+    // legend.innerHTML = content.join('');
+    // legend.index = 1;
+    // map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
+
     var infowindow = new google.maps.InfoWindow( { content:  'You' } );
     infowindow.close();
     infowindow.open( marker1.get('map'), marker1 );
@@ -340,19 +349,19 @@
     });
   }
 
-  window.station_count;
-  window.srNumber = 0;
+  window.station_count = 0;
+  window.srNumber = 1;
   function Apimarker(jsondata) {
     srNumber = 1;
     $('#station_list1').empty('');
     window.station_count = 0;
-    window.station_count += jsondata.length;
-    $('.station_count').text(window.station_count);
-    
+    window.station_count = jsondata.length;
+    $('#station_count').text(window.station_count);
     $.each(jsondata, function (index, value) {
       var markeicon = "<?php echo base_url('./assets/images/marke.png'); ?>";
       if ("<?php echo $this->session->userdata('UserID'); ?>" == value.user_id) {
-        var markeicon = "<?php echo base_url('./assets/images/usermarker.png'); ?>";
+        // var markeicon = "<?php //echo base_url('./assets/images/usermarker.png'); ?>";
+        var markeicon = "<?php echo base_url('./assets/images/owner-marker.png'); ?>";
       }
       marker =  new google.maps.Marker({
                 position: new google.maps.LatLng(value.station_lat, value.station_long),
@@ -380,6 +389,7 @@
           } else {
               $("#distance").text(response.rows[0].elements[0].distance.text).show();
               $("#duration").text(response.rows[0].elements[0].duration.text).show();
+              
               value.author = 'website';
               value.is_auther =  "<?php echo $this->session->userdata('UserID'); ?>" == value.user_id ? true : false;
 
@@ -390,7 +400,7 @@
                     '<div class="activity row station_list_stations" >'+
                         '<div class="col-sm-3"><span style="font-size:14px; margin-right: 10px;">'+(srNumber++)+' )</span><img src="'+(obj != null && obj != '' ? obj[0].url : 'assets/images/No_Image_Available.jpg')+'" style="border-radius: 10px;border: 3px solid #c7c7c7;width: 70px;height: 60px;"></div>'+
                         '<div class="col-sm-7 station_list_text_box">'+
-                            '<h5 class="mt-0 mb-0" style="cursor:pointer;" onclick="morezoom('+value.station_lat+','+value.station_long+');"><strong>'+value.station_Address+'</strong></h5>'+
+                            '<h5 class="mt-0 mb-0 morezoom" style="cursor:pointer;" onclick="morezoom('+value.station_lat+','+value.station_long+');"><strong>'+value.station_Address+'</strong></h5>'+
                             '<p class="text-muted font-13 mb-0"><b>@ '+value.distance+' with '+value.time+' of estimated travel time</b></p>'+
                             '<p mb-0 style="height: 26px;overflow: hidden;">'+value.station_general_comment+'</p>'+
                         '</div>'+
@@ -420,14 +430,20 @@
     });
   }
 
+  var nearByStations=[];
   function Api2marker(data) {
+    console.log(data);
+    nearByStations=[]
     $('#station_list2').empty('');
     var datalen = data.length;
-    var station_2_count = window.station_count + datalen;
-    $('#station_count').text(station_2_count);
+    var station_2_count = (window.station_count + datalen);
+    $('#station_count').html(datalen+ window.station_count);
     var markeicon = "<?php echo base_url('./assets/images/marke.png'); ?>";
 
+    var nearestStations = [];
+    var allStations = [];
     $.each(data, function (index, value) {
+
       marker =  new google.maps.Marker({      
                   position: new google.maps.LatLng(value.AddressInfo.Latitude, value.AddressInfo.Longitude),
                   map: window.map,
@@ -435,6 +451,7 @@
                   animation: google.maps.Animation.DROP,
                   title: value.AddressInfo.Title
                 });
+      
       openinfimodal(marker, value);
 
       var distanceService = new google.maps.DistanceMatrixService();
@@ -451,43 +468,62 @@
             if (status !== google.maps.DistanceMatrixStatus.OK) {
               console.log('Error:', status);
             } else {
-                value.author = 'api';
-                value.is_auther =  "<?php echo $this->session->userdata('UserID'); ?>" == value.user_id ? true : false;
-                value.distance = (response.rows[0].elements[0].distance != null && response.rows[0].elements[0].distance != '' ? response.rows[0].elements[0].distance.text : '0');
-                value.time = (response.rows[0].elements[0].duration != null && response.rows[0].elements[0].duration != '' ? response.rows[0].elements[0].duration.text : '0');
-                $('#station_list2').append(
-                    '<div class="activity row mb-5" >'+
-                        '<div class="col-sm-3"><span style="font-size:14px; margin-right: 10px;">'+(srNumber++)+' )</span><img src="'+(value.MediaItems != null && value.MediaItems != '' ? value.MediaItems[0].ItemThumbnailURL : 'assets/images/No_Image_Available.jpg')+'" style="border-radius: 10px;border: 3px solid #c7c7c7;width: 70px;height: 60px;"></div>'+
-                        '<div class="col-sm-7 station_list_text_box">'+
-                            '<h5 class="mt-0 mb-0" style="cursor:pointer;" onclick="morezoom('+value.AddressInfo.Latitude+','+value.AddressInfo.Longitude+');"><strong>'+value.AddressInfo.AddressLine1+'</strong></h5>'+
-                            '<p class="text-muted font-13 mb-0"><b>@ '+value.distance+' with '+value.time+' of estimated travel time</b></p>'+
-                            '<p mb-0 style="height: 26px;overflow: hidden;">'+(value.GeneralComments != null ? value.GeneralComments : '')+'</p>'+
-                        '</div>'+
-                        '<div class="col-sm-2 text-center">'+
-                          '<div class="">'+
-                              '<select id="rating_filtter" name="rating" class="rating_filtter">'+
-                                  '<option value="1">1</option>'+
-                                  '<option value="2">2</option>'+
-                                  '<option value="3">3</option>'+
-                                  '<option value="4">4</option>'+
-                                  '<option value="5" selected="">5</option>'+
-                              '</select>'+
-                          '</div>'+
-                          '<div class="font-10 pb-1" style="">'+
-                              '<button class="btn btn-success btn-block">Available</button>'+
-                          '</div>'+
-                          '<hr style="background:gray; height:2px;" class="station_devider">'+
-                      '</div>'+
-                      '<div class="dropdown-divider"></div>'+
-                    '</div>');
 
-                $('.rating_filtter').barrating({
-                    theme: 'fontawesome-stars',
-                    showSelectedRating: false
-                });
-              }
+              value.author = 'api';
+              value.is_auther =  "<?php echo $this->session->userdata('UserID'); ?>" == value.user_id ? true : false;
+              value.distance = (response.rows[0].elements[0].distance != null && response.rows[0].elements[0].distance != '' ? response.rows[0].elements[0].distance.text : '0');
+              value.time = (response.rows[0].elements[0].duration != null && response.rows[0].elements[0].duration != '' ? response.rows[0].elements[0].duration.text : '0');
+                
+              var isAuthor= "<?php echo $this->session->userdata('UserID'); ?>" == value.user_id ? true : false;
+              var distance = (response.rows[0].elements[0].distance != null && response.rows[0].elements[0].distance != '' ? response.rows[0].elements[0].distance.text : '0');
+              var time = (response.rows[0].elements[0].duration != null && response.rows[0].elements[0].duration != '' ? response.rows[0].elements[0].duration.text : '0');
+              nearByStations.push({'author':'api','is_auther':isAuthor,'distance' : distance,'onlyDistance' : parseFloat(distance.replace(' km','')),'time':time,'mediaItems':value.MediaItems,'addressInfo':value.AddressInfo,'generalComments':value.GeneralComments})
+            }
           });
     });
+    loadNearByStations()
+  }
+
+  function loadNearByStations(){
+    window.setTimeout(function() {
+      nearByStations=nearByStations.sort(function(obj1, obj2) {
+        // Ascending: first age less than the previous
+        return obj1.onlyDistance - obj2.onlyDistance;
+      });
+      // console.log(nearByStations);
+
+      $.each(nearByStations,function(index,value){
+       $('#station_list2').append(
+                      '<div class="activity row mb-5" >'+
+                          '<div class="col-sm-3"><span style="font-size:14px; margin-right: 10px;">'+(srNumber++)+' )</span><img src="'+(value.mediaItems != null && value.mediaItems != '' ? value.mediaItems[0].ItemThumbnailURL : 'assets/images/No_Image_Available.jpg')+'" style="border-radius: 10px;border: 3px solid #c7c7c7;width: 70px;height: 60px;"></div>'+
+                          '<div class="col-sm-7 station_list_text_box">'+
+                              '<h5 class="mt-0 mb-0 morezoom" style="cursor:pointer;" onclick="morezoom('+value.addressInfo.Latitude+','+value.addressInfo.Longitude+');"><strong>'+value.addressInfo.AddressLine1+'</strong></h5>'+
+                              '<p class="text-muted font-13 mb-0"><b>@ '+value.distance+' with '+value.time+' of estimated travel time</b></p>'+
+                              '<p mb-0 style="height: 26px;overflow: hidden;">'+(value.generalComments != null ? value.generalComments : '')+'</p>'+
+                          '</div>'+
+                          '<div class="col-sm-2 text-center">'+
+                            '<div class="">'+
+                                '<select id="rating_filtter" name="rating" class="rating_filtter">'+
+                                    '<option value="1">1</option>'+
+                                    '<option value="2">2</option>'+
+                                    '<option value="3">3</option>'+
+                                    '<option value="4">4</option>'+
+                                    '<option value="5" selected="">5</option>'+
+                                '</select>'+
+                            '</div>'+
+                            '<div class="font-10 pb-1" style="">'+
+                                '<button class="btn btn-success btn-block">Available</button>'+
+                            '</div>'+
+                            '<hr style="background:gray; height:2px;" class="station_devider">'+
+                        '</div>'+
+                        '<div class="dropdown-divider"></div>'+
+                      '</div>');
+      });
+      $('.rating_filtter').barrating({
+          theme: 'fontawesome-stars',
+          showSelectedRating: false
+      });
+    }, 1000);
   }
 
   /*open popup click on mark */
@@ -604,15 +640,14 @@
 
   /*morezoom*/
   function morezoom(station_lat, station_long) {
+
     var directionDisplay;
     var directionsService = new google.maps.DirectionsService();
     directionDisplay = new google.maps.DirectionsRenderer();
     directionDisplay.setMap(window.map);
-
+    
     if(localStorage.getItem("opencharge") == 'true') {
       localStorage.setItem("opencharge", false);
-      console.log(localStorage.getItem("start_latitude"));
-      console.log(localStorage.getItem("start_longitude"));
       var start = localStorage.getItem("start_latitude")+','+ localStorage.getItem("start_longitude");
     } else{
       var start = window.lat+','+ window.long;
@@ -621,7 +656,7 @@
     var request = {
       origin:start, 
       destination:end,
-      travelMode: google.maps.DirectionsTravelMode.DRIVING
+      travelMode: google.maps.DirectionsTravelMode.DRIVING,
     };
     directionsService.route(request, function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
@@ -635,6 +670,7 @@
         // document.getElementById('directions').innerHTML = txtDir;
       }
     });
+
     window.map.setZoom(20);
     window.map.setCenter(new google.maps.LatLng(station_lat, station_long));
     $('.stations-list-view').slideUp('slow');
@@ -746,11 +782,16 @@
   setTimeout(function() {
     if (stationViewStatus == 'true') {
       localStorage.setItem("reloading", false);
+      $(".end_location").show();
       var lat = localStorage.getItem("lat");
       var long = localStorage.getItem("long");
       morezoom(lat, long);
     }
   }, 2000);
+
+  $(document).on('click', '.morezoom', function() {
+    $(".end_location").show();
+  });
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?php echo mapkey; ?>&libraries=places&callback=maploadbeforecall" async defer></script>
 <!-- https://maps.googleapis.com/maps/api/js?key=AIzaSyCFHMMm7nRgHGvyqs33H2EXmx92fa6EBWE -->

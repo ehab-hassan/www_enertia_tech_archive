@@ -12,11 +12,18 @@ class Aws_sdk {
 
     public function __construct() {
         $this->ci = & get_instance();
-        $this->ci->load->config('aws_sdk');
+        // $this->ci->load->config('aws_sdk');
+
+        // Get AWS key and secret fron db
+        $this->ci->db->select('*');
+        $this->ci->db->from('ev_config');
+        $result = $this->ci->db->get()->result();
         $this->snsClient = SnsClient::factory(array(
                     'credentials' => array(
-                        'key' => $this->ci->config->item('aws_access_key'),
-                        'secret' => $this->ci->config->item('aws_secret_key'),
+                        // 'key' => $this->ci->config->item('aws_access_key'),
+                        // 'secret' => $this->ci->config->item('aws_secret_key'),
+                        'key' => $result[0]->User,
+                        'secret' => $result[0]->AppKey
                     ),
                     'region' => 'us-east-1', // < your aws from SNS Topic region
                     'version' => 'latest'

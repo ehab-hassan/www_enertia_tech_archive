@@ -5067,3 +5067,26 @@ input[switch="purple"]:checked + label {
 .station_devider{
   display: none;
 }
+.end_location{
+  display: inline-block;
+  position: absolute;
+  top: 12px;
+  background: white;
+  padding: 7px 10px;
+  right: 424px;
+  display: none;
+}
+
+@media (max-width: 991px){
+  .end_location{
+    top: 71px;
+    right: 61px;
+  }
+}
+@media (max-width: 767px){
+  .end_location{
+    top: 102px;
+    right: auto;
+    left: 15px;
+  }
+}

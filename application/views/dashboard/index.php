@@ -18,6 +18,14 @@
                 Legend: <i class="green mdi mdi-map-marker"></i> public | <i class="orange mdi mdi-map-marker"></i> Your
             </div>  
 
+            <div class="end_location">
+                A = Starting Point &nbsp;|&nbsp; B = Ending Point
+            </div> 
+
+           <!--  <div class="start_location">
+                A = Starting Point
+            </div>  -->
+
             <form class="form-horizontal col-md-4 col-sm-12 col-xs-12" role="form" id="filtter_form">
                 <div class="form-group m-0">
                     <div class="input-group">

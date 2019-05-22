@@ -1,7 +1,6 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 class Ajax extends CI_Controller {
 
 
@@ -25,7 +24,7 @@ class Ajax extends CI_Controller {
 		$this->load->model("Provider_Model");
 		$this->load->model("Supplytype_Model");
 		$this->load->model("Voltage_Model");  
-		$this->load->library('aws_sdk');
+		$this->load->library('Aws_sdk');
   	}
 
 
@@ -147,9 +146,14 @@ class Ajax extends CI_Controller {
 		// if ($userdata->UserOTP == '') {
 			echo $otp = rand(1000,9999);
 			$this->session->set_userdata('otp',$otp);
+
+			// $this->session->set_userdata('User', $result[0]['User']);
+			// $this->session->set_userdata('AppKey', $result[0]['AppKey']);
+
 			// $data_arr=array(
 			// 	'UserOTP' => $otp,
 			// 	);
+			
 			// $this->user->update($UserID,$data_arr);
 			// $mobile = $userdata->UserPhone;
 			$awssendmsgoutput = $this->aws_sdk->SendPushNotification($otp,$mobile);
